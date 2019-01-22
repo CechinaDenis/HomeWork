@@ -4,7 +4,7 @@ git init - Create a local path to codebase .git directory.
 git push - push command is used to upload local repository content to a remote repository. Pushing is how you transfer commits from your local repository to a remote repo. It's the counterpart to git fetch, but whereas fetching imports commits to local branches, pushing exports commits to remote branches.
 
 2)
-Windows+R CMD navigating to file folder command: copy <fileName>.<extension> path whare we whant to copy the file ex:d:\my\folder\
+Windows+R CMD navigating to file folder command: copy <fileName>.<extension> path where we want to copy the file ex:d:\my\folder\
 
 3)
-Windows+R CMD navigating to file folder command: del <fileName>.<extension> (*.<extension> if we whant to delete all files with extension ex: del *.mp3)
+Windows+R CMD navigating to file folder command: del <fileName>.<extension> (*.<extension> if we want to delete all files with extension ex: del *.mp3)
