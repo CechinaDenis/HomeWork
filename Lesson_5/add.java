@@ -12,7 +12,7 @@ public class add{
 	int x=sc.nextInt();//initializating an integer variable and assigning the value from the usser
 	System.out.print("Please enter Second INTEGER NUMBER -> ");
 	int y=sc.nextInt();
-	int z=x-y;//initializating and assigning a value fromn adding 2 integers
+	int z=x+y;//initializating and assigning a value fromn adding 2 integers
 	System.out.println(x+"+"+y+"="+z);
 	}
 }
