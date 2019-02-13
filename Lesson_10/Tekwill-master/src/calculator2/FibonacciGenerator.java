@@ -15,6 +15,6 @@ public class FibonacciGenerator {
             num1 = num2;
             num2 = sum;
         }
-
+        System.out.println("\n");
     }
 }

@@ -14,6 +14,7 @@ public class Application {
         Geometry geometry = new Geometry();
         Algebra algebra = new Algebra();
         FibonacciGenerator fibonacciGenerator = new FibonacciGenerator();
+        Menus menus = new Menus();
 
         boolean appRun = true;
         boolean calcAppRun = true;
@@ -25,21 +26,7 @@ public class Application {
         System.out.println("----------=Welcome to Math APP=----------\n");
 
         while (appRun == true) {
-            System.out.println("Please choose one of the following options:");
-            System.out.println("1.If the number is Odd or Even");
-            System.out.println("2.If you need to see Fibonacci list");
-            System.out.println("3.If you need to Calculate Square Perimeter");
-            System.out.println("4.If you need to Calculate Square Surface");
-            System.out.println("5.If you need to Calculate Rectangle Perimeter");
-            System.out.println("6.If you need to Calculate Rectangle Surface");
-            System.out.println("7.If you need to Calculate Rhomb Perimeter");
-            System.out.println("8.If you need to Calculate Rhomb Surface");
-            System.out.println("9.If you need to Calculate Triangle Perimeter");
-            System.out.println("10.If you need to Calculate Triangle Surface");
-            System.out.println("11.If you need to open Simple Calculater APP");
-            System.out.println("12.If you need to raise a number to the same number");
-            System.out.print("13.If you whant to -= QUIT =-\n=>");
-
+            menus.mainMenu();
             int in = sc.nextInt();
 
             switch (in) {
@@ -57,13 +44,13 @@ public class Application {
                     break;
 
                 case 3:
-                    System.out.println("Please enter Square Side to calculate Square Perimeter\n=>");
+                    System.out.print("Please enter Square Side to calculate Square Perimeter\n=>");
                     int squareSide = sc.nextInt();
                     geometry.calculateSquarePerimeter(squareSide);
                     break;
 
                 case 4:
-                    System.out.println("Please enter Square Side to calculate Square Surface\n=>");
+                    System.out.print("Please enter Square Side to calculate Square Surface\n=>");
                     squareSide = sc.nextInt();
                     geometry.calculateSquareSurface(squareSide);
                     break;
@@ -91,10 +78,7 @@ public class Application {
                     break;
 
                 case 8:
-                    System.out.println("Select an option to calculate  Rhomb Surface:");
-                    System.out.println("1.If you know altitude and the side length");
-                    System.out.println("2.If you know side length and the sine of angle A (or angle B)");
-                    System.out.print("3.If you know lengths of the diagonals\n=>");
+                    menus.rhombSurfaceMenu();
                     in = sc.nextInt();
 
                     switch (in) {
@@ -130,19 +114,15 @@ public class Application {
                 case 9:
                     System.out.print("To calculate Triangle Perimeter please enter Triangle Sides\nFirst Triangle Side\n=>");
                     int stTriangleSide = sc.nextInt();
-                    System.out.println("Second Triangle Side\n=>");
+                    System.out.print("Second Triangle Side\n=>");
                     int ndTriangleSide = sc.nextInt();
-                    System.out.println("Third Triangle Side\n=>");
+                    System.out.print("Third Triangle Side\n=>");
                     int rdTriangleSide = sc.nextInt();
                     geometry.calculateTrianglePerimeter(stTriangleSide, ndTriangleSide, rdTriangleSide);
                     break;
 
                 case 10:
-                    System.out.println("Select an option to calculate  Triangle Surface:");
-                    System.out.println("1.If you know all the sides length and the semiperimeter");
-                    System.out.println("2.If you know two sides length and the angle between them");
-                    System.out.println("3.If you know a side and its height");
-                    System.out.print("4.If you know the radius of the circle inscribed in the triangle and the semipermeter\n=>");
+                    menus.triangleSurfaceMenu();
                     in = sc.nextInt();
 
                     switch (in) {
@@ -191,39 +171,13 @@ public class Application {
 
                 case 11:
                     while (calcAppRun == true) {
-                        //try & catch blok
-                        try {
-                            System.out.println("Please enter '1' if you whant to add two numbers (+)");
-                            System.out.println("Please enter '2' if you whant to substract tow numbers (-)");
-                            System.out.println("Please enter '3' if you whant to multiply tow numbers (*)");
-                            System.out.println("Please enter '4' if you whant to split tow numbers (/)");
-                            System.out.println("Please enter '5' if you whant to % tow numbers (%)");
-                            System.out.println("Please enter '6' if you whant to Quit");
-                            System.out.print("Waiting for IMPUT -> ");
-                            in = sc.nextInt();
-                            //while cycle
-                            while (!(in == 1 || in == 2 || in == 3 || in == 4 || in == 5 || in == 6)) {
-                                System.out.println(errorMessage);
-                                System.out.println("Please enter '1' if you whant to add two numbers (+)");
-                                System.out.println("Please enter '2' if you whant to substract tow numbers (-)");
-                                System.out.println("Please enter '3' if you whant to multiply tow numbers (*)");
-                                System.out.println("Please enter '4' if you whant to split tow numbers (/)");
-                                System.out.println("Please enter '5' if you whant to % tow numbers (%)");
-                                System.out.println("Please enter '6' if you whant to Quit");
-                                System.out.print("Waiting for IMPUT -> ");
-                                in = sc.nextInt();
-                            }
-                        } catch (Exception e) {
-                            System.out.println(errorMessage);
-                            sc = new Scanner(System.in);
-                        } 
-                        
+
+                        menus.calculaterMenu();
+                        in = sc.nextInt();
+
                         switch (in) {
                             case 1:
-                                calcAppRun=Algebra.addTowNumbers(calcAppRun);
-                                /*
-                                MAM OPRIT AICI^
-                                */
+                                calcAppRun = Algebra.addTowNumbers(calcAppRun);
                                 break;
                             case 2:
                                 Algebra.substractTowNumbers(calcAppRun);
@@ -238,10 +192,12 @@ public class Application {
                                 Algebra.numberRest(calcAppRun);
                                 break;
                             case 6:
-                                
+                                calcAppRun = false;
+                                System.out.println("");
                                 break;
                         }
                     }
+                    calcAppRun=true;
                     break;
 
                 case 12:
