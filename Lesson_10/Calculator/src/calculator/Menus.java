@@ -1,9 +1,9 @@
-package calculator2;
+package calculator;
 
 /**
  * This is a class that contains all Menus.
  *
- * @author Admin
+ * @author Cechina Denis
  */
 public class Menus {
 
@@ -27,18 +27,22 @@ public class Menus {
     void rhombSurfaceMenu() {
         System.out.println("Select an option to calculate  Rhomb Surface:");
         System.out.println("1.If you know altitude and the side length");
-        System.out.println("2.If you know side length and the sine of angle A (or angle B)");
+        System.out.println("2.If you know side length and the sine of angle A "
+                + "(or angle B)");
         System.out.print("3.If you know lengths of the diagonals\n=>");
     }
 
     void triangleSurfaceMenu() {
         System.out.println("Select an option to calculate  Triangle Surface:");
-        System.out.println("1.If you know all the sides length and the semiperimeter");
-        System.out.println("2.If you know two sides length and the angle between them");
+        System.out.println("1.If you know all the sides length and the "
+                + "semiperimeter");
+        System.out.println("2.If you know two sides length and the angle "
+                + "between them");
         System.out.println("3.If you know a side and its height");
-        System.out.print("4.If you know the radius of the circle inscribed in the triangle and the semipermeter\n=>");
+        System.out.print("4.If you know the radius of the circle inscribed in "
+                + "the triangle and the semipermeter\n=>");
     }
-        
+
     void calculaterMenu() {
         System.out.println("Please enter '1' if you whant to add two numbers (+)");
         System.out.println("Please enter '2' if you whant to substract tow numbers (-)");

@@ -1,9 +1,9 @@
-package calculator2;
+package calculator;
 
 /**
  * This is a class that contains geometry operations.
  *
- * @author sscerbatiuc&Denis Cechina
+ * @author Denis Cechina
  */
 public class Geometry {
 
@@ -47,18 +47,24 @@ public class Geometry {
         System.out.println("Rhomb Surface: " + surface+"\n");
     }
 
-    public void calculateTrianglePerimeter(int stTriangleSide, int ndTriangleSide, int rdTriangleSide) {
+    public void calculateTrianglePerimeter(int stTriangleSide, int 
+            ndTriangleSide, int rdTriangleSide) {
         int perimeter = stTriangleSide + ndTriangleSide + rdTriangleSide;
         System.out.println("Triangle Perimeter: " + perimeter+"\n");
     }
 
-    public void calculateTriangleSurface1(int stTriangleSide, int ndTriangleSide, int rdTriangleSide, int triangleSemiPerimeter) {
-        double surface = Math.sqrt(triangleSemiPerimeter * (triangleSemiPerimeter - stTriangleSide) * (triangleSemiPerimeter - ndTriangleSide) * (triangleSemiPerimeter - rdTriangleSide));
+    public void calculateTriangleSurface1(int stTriangleSide, int ndTriangleSide,
+            int rdTriangleSide, int triangleSemiPerimeter) {
+        double surface = Math.sqrt(triangleSemiPerimeter * (triangleSemiPerimeter 
+                - stTriangleSide) * (triangleSemiPerimeter - ndTriangleSide) * 
+                (triangleSemiPerimeter - rdTriangleSide));
         System.out.println("Triangle Surface: " + surface+"\n");
     }
 
-    public void calculateTriangleSurface2(int stTriangleSide, int ndTriangleSide, int triangleAngle) {
-        double surface = (stTriangleSide * ndTriangleSide * Math.sin(triangleAngle)) / 2;
+    public void calculateTriangleSurface2(int stTriangleSide, int ndTriangleSide, 
+            int triangleAngle) {
+        double surface = (stTriangleSide * ndTriangleSide * Math.sin(triangleAngle)) 
+                / 2;
         System.out.println("Triangle Surface: " + surface+"\n");
     }
 
@@ -67,7 +73,8 @@ public class Geometry {
         System.out.println("Triangle Surface: " + surface+"\n");
     }
 
-    public void calculateTriangleSurface4(int circleInscribedTriangle, int triangleSemiPerimeter) {
+    public void calculateTriangleSurface4(int circleInscribedTriangle, int 
+            triangleSemiPerimeter) {
         int surface = triangleSemiPerimeter * circleInscribedTriangle;
         System.out.println("Triangle Surface: " + surface+"\n");
     }
