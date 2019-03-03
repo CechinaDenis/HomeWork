@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package app.employeemanager.employees;
 
 import app.employeemanager.Employee;
@@ -17,21 +12,23 @@ public class Manager extends Employee {
     }
 
     public Manager(String surename) {
-        this.surename = surename;
+        super(surename);
     }
 
     public Manager(String surename, String birthDate) {
-        this(surename);
-        this.birthDate = birthDate;
+        super(surename, birthDate);
     }
 
     public Manager(String surename, String birthDate, long idnp) {
-        this(surename, birthDate);
-        this.idnp = idnp;
+        super(surename, birthDate, idnp);
     }
 
     public Manager(String surename, String birthDate, long idnp, String street, short house, byte block, short apartment) {
-        this(surename, birthDate, idnp);
-        this.street = street;
+        super(surename, birthDate, idnp, street, house, block, apartment);
+    }
+
+    @Override
+    public void working() {
+        System.out.println("I'm working in Manager's department");
     }
 }

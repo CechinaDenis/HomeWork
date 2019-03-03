@@ -3,15 +3,34 @@ package app.employeemanager;
 /**
  * @author Denis Cechina
  */
-public class Employee {
+public abstract class Employee {
     //Instance Variable
     protected String name, surename, birthDate, street;
     protected long idnp;
     protected byte block;
     protected short house, apartment;
     
-    public Employee(){
+    public Employee(){//Default Constructor
         
+    }
+    
+        public Employee(String surename) {
+        this.surename = surename;
+    }
+
+    public Employee(String surename, String birthDate) {
+        this(surename);
+        this.birthDate = birthDate;
+    }
+
+    public Employee(String surename, String birthDate, long idnp) {
+        this(surename, birthDate);
+        this.idnp = idnp;
+    }
+
+    public Employee(String surename, String birthDate, long idnp, String street, short house, byte block, short apartment) {
+        this(surename, birthDate, idnp);
+        this.street = street;
     }
     
     public void show() {
@@ -36,5 +55,5 @@ public class Employee {
         System.out.println("Adress: " +street + " " + house + "\\" + block + " ap. " + apartment);
     }
     
-
+    public abstract void working();
 }
