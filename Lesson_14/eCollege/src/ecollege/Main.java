@@ -127,6 +127,17 @@ public class Main {//Main class
         Smartphone.smartphonesAndAveragePrice();//Calling Method 
         //smartphonesAndAveragePrice
         System.out.println("----------=END OF QUESTION 9=----------\n");
+        IQ iq1 = new IQ("James Devine", 46, 87F);
+        IQ iq2 = new IQ("Helena Smith", 126, 101F);
+        IQ iq3 = new IQ("Daniel Jones ", 27, 1510F);
+        System.out.println(iq1);
+        System.out.println(iq1.IQReport());
+        System.out.println(iq2);
+        System.out.println(iq2.IQReport());
+        System.out.println(iq3);
+        System.out.println(iq3.IQReport());
+        System.out.println("----------=END OF QUESTION 10=----------\n");
+        
     }
     
 }
