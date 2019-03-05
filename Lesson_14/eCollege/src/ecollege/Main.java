@@ -33,7 +33,7 @@ public class Main {//Main class
         pizzaLarge.price = 14;
         //Printing to the screen
         System.out.println(pizzaLarge.toString()+"\n"+pizzaLarge.eat());
-        System.out.println("----------=END OF QUESTION 1=----------\n");
+        System.out.println("\n----------=END OF QUESTION 1=----------\n");
         
         Jelly jellyChivery = new Jelly();//Creating an OBJ
         //Initializating OBJ variable
@@ -67,7 +67,7 @@ public class Main {//Main class
         //Printing to the screen
         System.out.println(jellyChivery.toStringJelly()
                 +jellyChivery.setInstructions()+"\n");
-        System.out.println("----------=END OF QUESTION 2=----------\n");
+        System.out.println("\n----------=END OF QUESTION 2=----------\n");
         
         Numbers n1 = new Numbers();//Creatinc an OBJ
         //Sending values to methods and printing the return values to the screen
@@ -77,17 +77,17 @@ public class Main {//Main class
         System.out.println("Remainder: " + n1.remainder(100,90));
         //Calling a method
         n1.message();
-        System.out.println("----------=END OF QUESTION 4=----------\n");
+        System.out.println("\n----------=END OF QUESTION 4=----------\n");
         
         NumberRange numberRanger = new NumberRange();//Creating an OBJ
         //Sending values to the method and printing return message to the screen
         System.out.println("\n"+numberRanger.checkInRange(5, 500, 333));
-        System.out.println("----------=END OF QUESTION 5=----------\n");
+        System.out.println("\n----------=END OF QUESTION 5=----------\n");
         
         VowelCount vowelCount = new VowelCount();//Creating an OBJ
         //Sending values to the method and printing return message to the screen
         System.out.println(vowelCount.vowelCount("Walking on the moon"));
-        System.out.println("----------=END OF QUESTION 6=----------\n");
+        System.out.println("\n----------=END OF QUESTION 6=----------\n");
         
         Sum sum = new Sum();//Creating an OBJ
         //Sending values to the method and printing return message to the screen
@@ -96,8 +96,8 @@ public class Main {//Main class
         System.out.println(sum.sumTwoValues(4.0, 5.0));
         System.out.println(sum.sumTwoValues(4, 5));
         System.out.println(sum.sumTwoValues(4, 5));
-        System.out.println("----------=END OF QUESTION 7=----------\n");
-        //Creating OBJs and Declaring Atributess
+        System.out.println("\n----------=END OF QUESTION 7=----------\n");
+        //Creating OBJs and Initializing Atributess
         Student s1 = new Student("Billy", "Davis", (byte)17, "Leaving Cert 1", 
                 70.5F, "12 High Street, Dublin");
         Student s2 = new Student("Anna", "Smith", (byte)18, "Leaving Cert 1", 
@@ -110,8 +110,8 @@ public class Main {//Main class
         System.out.println(s3);
         //Calling Method studentsAndGrade
         Student.studentsAndGrade();
-        System.out.println("----------=END OF QUESTION 8=----------\n");
-        //Creating OBJs and Declaring Atributess
+        System.out.println("\n----------=END OF QUESTION 8=----------\n");
+        //Creating OBJs and Initializing Atributess
         Smartphone sp1 = new Smartphone("Nooks 610", "Nooks", 100.0F,
                 "04/06/2008", 0F, false);
         sp1.topUpCredit(15F);//Calling topUpCredit method
@@ -126,18 +126,37 @@ public class Main {//Main class
         System.out.println(sp3);
         Smartphone.smartphonesAndAveragePrice();//Calling Method 
         //smartphonesAndAveragePrice
-        System.out.println("----------=END OF QUESTION 9=----------\n");
+        System.out.println("\n----------=END OF QUESTION 9=----------\n");
+        //Creating OBJs and Initializing Atributess
         IQ iq1 = new IQ("James Devine", 46, 87F);
         IQ iq2 = new IQ("Helena Smith", 126, 101F);
         IQ iq3 = new IQ("Daniel Jones ", 27, 1510F);
+        //Calling and printing to screen Overridet toString method 
         System.out.println(iq1);
-        System.out.println(iq1.IQReport());
-        System.out.println(iq2);
+        System.out.println(iq1.IQReport());//Calling and printing to screen 
+        //IQReport method
+        System.out.println(iq2);//Calling and printing to screen Overridet 
+        //toString method 
         System.out.println(iq2.IQReport());
         System.out.println(iq3);
         System.out.println(iq3.IQReport());
-        System.out.println("----------=END OF QUESTION 10=----------\n");
-        
+        System.out.println("\n----------=END OF QUESTION 10=----------\n");
+        //Creating OBJs and Initializing Atributess
+        Television tv = new Television(100, 5, true);
+        tv.channelUp();//Calling cheannelUp method that will increase channel 
+        //atribute by one (1)
+        tv.channelDown();//Calling cheannelDown method that will decrease 
+        //channel atribute by one (1)
+        tv.volumeUp();//Calling volumeUp method that will increase 
+        //volume atribute by one (1)
+        tv.volumeUp();
+        tv.volumeDown();//Calling volumeDown method that will decrease 
+        //channel atribute by one (1)
+        tv.setOn_Off(false);//Calling setter method setOn_Off and sending 
+        //< false > value, to set on_of atribute to < false > value.
+        System.out.println(tv);//Calling and printing to screen Overridet 
+        //toString method 
+        System.out.println("\n----------=END OF QUESTION 11=----------\n");
     }
     
 }
