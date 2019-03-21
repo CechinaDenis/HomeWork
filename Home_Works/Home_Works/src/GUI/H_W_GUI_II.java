@@ -1,6 +1,8 @@
-
 package GUI;
-import java.awt.ComponentOrientation;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.text.BadLocationException;
 
 /**
  *
@@ -11,7 +13,6 @@ public class H_W_GUI_II extends javax.swing.JFrame {
     public H_W_GUI_II() {
         initComponents();
         this.btnPlsMns.setText("\u00B1");
-        //this.txtField.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
     }
 
     private void txtAreaWriting(char btnNr) {
@@ -50,7 +51,17 @@ public class H_W_GUI_II extends javax.swing.JFrame {
                 }
                 break;
             case '.':
-                if (!dotPutted && !"".equals(txtArea.getText())) {
+                if (!dotPutted && "".equals(txtArea.getText())) {
+                    txtArea.setText(prvTxtArea + "0.");
+                    dotPutted = true;
+                } else if (!dotPutted
+                        && (prvTxtArea.endsWith("+\n")
+                        || prvTxtArea.endsWith("-\n")
+                        || prvTxtArea.endsWith("*\n")
+                        || prvTxtArea.endsWith("/\n"))) {
+                    txtArea.setText(prvTxtArea + "0.");
+                    dotPutted = true;
+                } else if (!dotPutted && !"".equals(txtArea.getText())) {
                     txtArea.setText(prvTxtArea + ".");
                     dotPutted = true;
                 }
@@ -62,76 +73,98 @@ public class H_W_GUI_II extends javax.swing.JFrame {
         String prvTxtArea = txtArea.getText();
         //First time operation
         if (!stOperationWrite && !"".equals(prvTxtArea)
-                && !"\n".equals(prvTxtArea.substring(prvTxtArea.length() - 1))) {
+                && "".equals(txtField.getText())) {
             stOperationWrite = true;
             switch (operation) {
                 case '+':
-                    txtField.setText(prvTxtArea);
-                    
+                    txtField.setText(String.valueOf(Double.parseDouble(prvTxtArea)));
                     txtArea.setText("+\n");
                     break;
                 case '-':
-                    txtArea.setText(prvTxtArea + "-\n");
-                    txtField.setText(prvTxtArea);
-                    break;
-                case '*':
-                    txtArea.setText(prvTxtArea + "*\n");
-                    txtField.setText(prvTxtArea);
-                    break;
-                case '/':
-                    txtArea.setText(prvTxtArea + "/\n");
-                    txtField.setText(prvTxtArea);
-                    break;
-            }
-        } 
-        //Changing the operation sign
-        else if (stOperationWrite && !"".equals(prvTxtArea)
-                && ("+\n".equals(prvTxtArea.substring(prvTxtArea.length() - 2))
-                || "-\n".equals(prvTxtArea.substring(prvTxtArea.length() - 2))
-                || "*\n".equals(prvTxtArea.substring(prvTxtArea.length() - 2))
-                || "/\n".equals(prvTxtArea.substring(prvTxtArea.length() - 2)))) {
-            prvTxtArea = txtArea.getText();
-            switch (operation) {
-                case '+':
-                    txtArea.setText(prvTxtArea.substring(0, prvTxtArea.length() - 2) + "+\n");
-                    break;
-                case '-':
-                    txtArea.setText(prvTxtArea.substring(0, prvTxtArea.length() - 2) + "-\n");
-                    break;
-                case '*':
-                    txtArea.setText(prvTxtArea.substring(0, prvTxtArea.length() - 2) + "*\n");
-                    break;
-                case '/':
-                    txtArea.setText(prvTxtArea.substring(0, prvTxtArea.length() - 2) + "/\n");
-                    break;
-            }
-        } 
-        //Calculating Nr from the txtField and entered Nr, when entering the next sign
-        else if (stOperationWrite
-                && !"\n".equals(prvTxtArea.substring(prvTxtArea.length() - 1))) {
-            switch (operation) {
-                case '+':
-                    System.out.println(prvTxtArea.charAt(0) + "-");
-                    txtField.setText(String.valueOf(Double.parseDouble(txtField.getText()) + Double.parseDouble(prvTxtArea.substring(2))));
-                    txtArea.setText("+\n");
-                    break;
-                case '-':
-                    txtField.setText(String.valueOf(Double.parseDouble(txtField.getText()) - Double.parseDouble(prvTxtArea.substring(2))));
+                    txtField.setText(String.valueOf(Double.parseDouble(prvTxtArea)));
                     txtArea.setText("-\n");
                     break;
                 case '*':
-                    txtField.setText(String.valueOf(Double.parseDouble(txtField.getText()) * Double.parseDouble(prvTxtArea.substring(2))));
+                    txtField.setText(String.valueOf(Double.parseDouble(prvTxtArea)));
                     txtArea.setText("*\n");
                     break;
                 case '/':
-                    txtField.setText(String.valueOf(Double.parseDouble(txtField.getText()) / Double.parseDouble(prvTxtArea.substring(2))));
+                    txtField.setText(String.valueOf(Double.parseDouble(prvTxtArea)));
                     txtArea.setText("/\n");
                     break;
             }
+            dotPutted = false;
+        } //Changing the operation sign
+        else if (stOperationWrite && !"".equals(prvTxtArea)
+                && (prvTxtArea.endsWith("+\n")
+                || prvTxtArea.endsWith("-\n")
+                || prvTxtArea.endsWith("*\n")
+                || prvTxtArea.endsWith("/\n"))) {
+            switch (operation) {
+                case '+':
+                    txtArea.setText("+\n");
+                    break;
+                case '-':
+                    txtArea.setText("-\n");
+                    break;
+                case '*':
+                    txtArea.setText("*\n");
+                    break;
+                case '/':
+                    txtArea.setText("/\n");
+                    break;
+            }
+        } //Calculating Nr from the txtField and entered Nr, when entering the 
+        //next sign
+        else if (stOperationWrite && !prvTxtArea.endsWith("\n")) {
+            switch (operation) {
+                case '+':
+                    if (operation == prvTxtArea.charAt(0)) {
+                        txtField.setText(String.valueOf(Double
+                                .parseDouble(txtField.getText()) + Double.
+                                parseDouble(prvTxtArea.substring(2))));
+                        txtArea.setText("+\n");
+                        break;
+                    } else if (operation != prvTxtArea.charAt(0)) {
+                        mathOperations(prvTxtArea.charAt(0));
+                        break;
+                    }
+                case '-':
+                    if (operation == prvTxtArea.charAt(0)) {
+                        txtField.setText(String.valueOf(Double.
+                                parseDouble(txtField.getText()) - Double.
+                                parseDouble(prvTxtArea.substring(2))));
+                        txtArea.setText("-\n");
+                        break;
+                    } else if (operation != prvTxtArea.charAt(0)) {
+                        mathOperations(prvTxtArea.charAt(0));
+                        break;
+                    }
+                case '*':
+                    if (operation == prvTxtArea.charAt(0)) {
+                        txtField.setText(String.valueOf(Double.
+                                parseDouble(txtField.getText()) * Double.
+                                parseDouble(prvTxtArea.substring(2))));
+                        txtArea.setText("*\n");
+                        break;
+                    } else if (operation != prvTxtArea.charAt(0)) {
+                        mathOperations(prvTxtArea.charAt(0));
+                        break;
+                    }
+                case '/':
+                    if (operation == prvTxtArea.charAt(0)) {
+                        txtField.setText(String.valueOf(Double.
+                                parseDouble(txtField.getText()) / Double.
+                                parseDouble(prvTxtArea.substring(2))));
+                        txtArea.setText("/\n");
+                        break;
+                    } else if (operation != prvTxtArea.charAt(0)) {
+                        mathOperations(prvTxtArea.charAt(0));
+                        break;
+                    }
+            }
         }
     }
-    
-    private 
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -156,7 +189,7 @@ public class H_W_GUI_II extends javax.swing.JFrame {
         btnMlt = new javax.swing.JButton();
         btnC = new javax.swing.JButton();
         btnPlsMns = new javax.swing.JButton();
-        btnRst = new javax.swing.JButton();
+        btnPercentages = new javax.swing.JButton();
         btnDvs = new javax.swing.JButton();
         txtField = new javax.swing.JTextField();
 
@@ -280,8 +313,18 @@ public class H_W_GUI_II extends javax.swing.JFrame {
         });
 
         btnPlsMns.setText("+/-");
+        btnPlsMns.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPlsMnsActionPerformed(evt);
+            }
+        });
 
-        btnRst.setText("%");
+        btnPercentages.setText("%");
+        btnPercentages.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPercentagesActionPerformed(evt);
+            }
+        });
 
         btnDvs.setText("/");
         btnDvs.addActionListener(new java.awt.event.ActionListener() {
@@ -338,7 +381,7 @@ public class H_W_GUI_II extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnPlsMns, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnRst, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnPercentages, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnDvs, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE))
@@ -355,7 +398,7 @@ public class H_W_GUI_II extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnPlsMns, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnRst, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnPercentages, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnC, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnDvs, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -388,12 +431,10 @@ public class H_W_GUI_II extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn5ActionPerformed
-        // TODO add your handling code here:
         txtAreaWriting('5');
     }//GEN-LAST:event_btn5ActionPerformed
 
     private void btnCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCActionPerformed
-        // TODO add your handling code here:
         txtArea.setText("");
         txtField.setText("");
         dotPutted = false;
@@ -401,80 +442,131 @@ public class H_W_GUI_II extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCActionPerformed
 
     private void btn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn1ActionPerformed
-        // TODO add your handling code here:
         txtAreaWriting('1');
     }//GEN-LAST:event_btn1ActionPerformed
 
     private void btn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn2ActionPerformed
-        // TODO add your handling code here:
         txtAreaWriting('2');
     }//GEN-LAST:event_btn2ActionPerformed
 
     private void btn3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn3ActionPerformed
-        // TODO add your handling code here:
         txtAreaWriting('3');
     }//GEN-LAST:event_btn3ActionPerformed
 
     private void btn4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn4ActionPerformed
-        // TODO add your handling code here:
         txtAreaWriting('4');
     }//GEN-LAST:event_btn4ActionPerformed
 
     private void btn6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn6ActionPerformed
-        // TODO add your handling code here:
         txtAreaWriting('6');
     }//GEN-LAST:event_btn6ActionPerformed
 
     private void btn7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn7ActionPerformed
-        // TODO add your handling code here:
         txtAreaWriting('7');
     }//GEN-LAST:event_btn7ActionPerformed
 
     private void btn8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn8ActionPerformed
-        // TODO add your handling code here:
         txtAreaWriting('8');
     }//GEN-LAST:event_btn8ActionPerformed
 
     private void btn9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn9ActionPerformed
-        // TODO add your handling code here:
         txtAreaWriting('9');
     }//GEN-LAST:event_btn9ActionPerformed
 
     private void btn0ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn0ActionPerformed
-        // TODO add your handling code here:
         txtAreaWriting('0');
     }//GEN-LAST:event_btn0ActionPerformed
 
     private void btnPlsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlsActionPerformed
-        // TODO add your handling code here:
         mathOperations('+');
+        if (!"".equals(txtField.getText())) {
+            txtArea.setText("+\n");
+        }
+        dotPutted = false;
     }//GEN-LAST:event_btnPlsActionPerformed
 
     private void btnMnsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMnsActionPerformed
-        // TODO add your handling code here:
         mathOperations('-');
+        if (!"".equals(txtField.getText())) {
+            txtArea.setText("-\n");
+        }
+        dotPutted = false;
     }//GEN-LAST:event_btnMnsActionPerformed
 
     private void btnMltActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMltActionPerformed
-        // TODO add your handling code here:
         mathOperations('*');
+        if (!"".equals(txtField.getText())) {
+            txtArea.setText("*\n");
+        }
+        dotPutted = false;
     }//GEN-LAST:event_btnMltActionPerformed
 
     private void btnDvsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDvsActionPerformed
-        // TODO add your handling code here:
         mathOperations('/');
+        if (!"".equals(txtField.getText())) {
+            txtArea.setText("/\n");
+        }
+        dotPutted = false;
     }//GEN-LAST:event_btnDvsActionPerformed
 
     private void btnDotActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDotActionPerformed
-        // TODO add your handling code here:
         txtAreaWriting('.');
     }//GEN-LAST:event_btnDotActionPerformed
 
     private void btnEqlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEqlActionPerformed
-        // TODO add your handling code here:
-        String area = txtArea.getText();
-        mathOperations(area.charAt(0));
+        if (!"".equals(txtArea.getText())) {
+            mathOperations(txtArea.getText().charAt(0));
+        }
+//        txtArea.setText("");
+        dotPutted = false;
     }//GEN-LAST:event_btnEqlActionPerformed
+
+    private void btnPercentagesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPercentagesActionPerformed
+        if (!"".equals(txtField.getText()) && !"".equals(txtArea.getText())
+                && (txtArea.getText().startsWith("+\n")
+                || txtArea.getText().startsWith("-\n")
+                || txtArea.getText().startsWith("*\n")
+                || txtArea.getText().startsWith("/\n"))
+                && !txtArea.getText().endsWith("\n")) {
+
+            percentages = Double.parseDouble(txtField.getText()) * (Double.
+                    parseDouble(txtArea.getText().substring(2)) / 100);
+
+            txtArea.setText(String.valueOf(txtArea.getText().charAt(0)) + "\n"
+                    + String.valueOf(percentages));
+
+            mathOperations(txtArea.getText().charAt(0));
+
+        }
+    }//GEN-LAST:event_btnPercentagesActionPerformed
+
+    private void btnPlsMnsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlsMnsActionPerformed
+        if (!"".equals(txtArea.getText())
+                && (txtArea.getText().startsWith("+\n")
+                || txtArea.getText().startsWith("-\n")
+                || txtArea.getText().startsWith("*\n")
+                || txtArea.getText().startsWith("/\n"))
+                && !txtArea.getText().endsWith("\n")) {
+            try {
+                String prvTxtArea = txtArea.getText().substring(2);
+                if(!prvTxtArea.startsWith("-")){
+                    txtArea.setText(txtArea.getText(0, 1) + "\n-" + prvTxtArea);
+                    System.out.println("first if " + prvTxtArea);
+                }
+                    
+                else if (prvTxtArea.startsWith("-")){
+                    prvTxtArea = txtArea.getText().substring(1);
+                    txtArea.setText(txtArea.getText(0, 1) + "\n" + prvTxtArea.substring(2));
+                    System.out.println("Second if " + prvTxtArea);
+                }
+                
+                System.out.println(prvTxtArea);
+            } catch (BadLocationException ex) {
+                Logger.getLogger(H_W_GUI_II.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+    }//GEN-LAST:event_btnPlsMnsActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -489,18 +581,14 @@ public class H_W_GUI_II extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(H_W_GUI_II.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(H_W_GUI_II.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(H_W_GUI_II.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(H_W_GUI_II.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
 
+        //</editor-fold>
+        //</editor-fold>
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new H_W_GUI_II().setVisible(true);
@@ -525,12 +613,13 @@ public class H_W_GUI_II extends javax.swing.JFrame {
     private javax.swing.JButton btnEql;
     private javax.swing.JButton btnMlt;
     private javax.swing.JButton btnMns;
+    private javax.swing.JButton btnPercentages;
     private javax.swing.JButton btnPls;
     private javax.swing.JButton btnPlsMns;
-    private javax.swing.JButton btnRst;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea txtArea;
     private javax.swing.JTextField txtField;
     // End of variables declaration//GEN-END:variables
     private boolean dotPutted = false, stOperationWrite = false;
+    private double percentages;
 }
