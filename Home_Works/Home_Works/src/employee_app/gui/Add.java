@@ -19,7 +19,6 @@ public class Add extends javax.swing.JFrame {
 
         txtFldName = new java.awt.TextField();
         txtFldSurename = new java.awt.TextField();
-        formTxtFldBirthdate = new javax.swing.JFormattedTextField();
         lblName = new javax.swing.JLabel();
         lblBirthdate = new javax.swing.JLabel();
         lblSurename = new javax.swing.JLabel();
@@ -34,8 +33,10 @@ public class Add extends javax.swing.JFrame {
         lblPossition = new javax.swing.JLabel();
         cmbBoxPossition = new javax.swing.JComboBox<>();
         btnAdd = new javax.swing.JButton();
+        formTxtFldBirthdate = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Add");
 
         txtFldName.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         txtFldName.addActionListener(new java.awt.event.ActionListener() {
@@ -50,10 +51,6 @@ public class Add extends javax.swing.JFrame {
                 txtFldSurenameActionPerformed(evt);
             }
         });
-
-        formTxtFldBirthdate.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd/MM/yyyy"))));
-        formTxtFldBirthdate.setText("DD/MM/YYYY");
-        formTxtFldBirthdate.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
         lblName.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lblName.setText("Name:");
@@ -117,6 +114,10 @@ public class Add extends javax.swing.JFrame {
             }
         });
 
+        formTxtFldBirthdate.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("yyyy-MM-dd"))));
+        formTxtFldBirthdate.setToolTipText("YYYY-MM-DD");
+        formTxtFldBirthdate.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -126,15 +127,7 @@ public class Add extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblCounrty)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtFldCountry, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblCity)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtFldCity, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(lblName)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtFldName, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -146,6 +139,14 @@ public class Add extends javax.swing.JFrame {
                                 .addComponent(lblBirthdate)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(formTxtFldBirthdate, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblCounrty)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtFldCountry, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblCity)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtFldCity, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(lblStreet)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -192,12 +193,11 @@ public class Add extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(txtFldZipCode, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(lblPossition, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
-                        .addComponent(cmbBoxPossition, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE))
-                    .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(cmbBoxPossition)
+                    .addComponent(lblPossition, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnAdd, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -236,12 +236,12 @@ public class Add extends javax.swing.JFrame {
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         
-        String possition = cmbBoxPossition.getSelectedItem().toString();
+        String position = cmbBoxPossition.getSelectedItem().toString();
         Employee emp = new Employee(txtFldName.getText(), txtFldSurename.getText(),
             formTxtFldBirthdate.getText(), txtFldCountry.getText(), 
             txtFldCity.getText(), txtFldStreet.getText(), txtFldZipCode.getText());
         EmployeeService.getEmpoyeeList().add(emp);
-        emp.setPosition(Position.getByPositionName(possition));
+        emp.setPosition(Position.getByPositionName(position));
         Main.addEmployee(emp);
         txtFldName.setText("");
         txtFldSurename.setText("");
@@ -249,8 +249,7 @@ public class Add extends javax.swing.JFrame {
         txtFldCity.setText("");
         txtFldStreet.setText("");
         txtFldZipCode.setText("");
-        
-
+        this.setVisible(false);
     }//GEN-LAST:event_btnAddActionPerformed
 
     public static void main(String args[]) {

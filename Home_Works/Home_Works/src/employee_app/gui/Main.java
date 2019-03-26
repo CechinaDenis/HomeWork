@@ -9,11 +9,13 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Main extends javax.swing.JFrame {
 
+    private final int ID = 0;
+
     public static void addEmployee(Employee emp) {
         if (emp.isValid()) {
             addEmployeeToList(emp);
         } else {
-            System.out.println("error");  // display the error
+            System.out.println("error");
         }
     }
 
@@ -22,13 +24,33 @@ public class Main extends javax.swing.JFrame {
     }
 
     private static void addEmployeeToList(Employee emp) {
-        DefaultTableModel employeeListModel = (DefaultTableModel) Main.tblMain.getModel();
+        DefaultTableModel employeeListModel = (DefaultTableModel) 
+                Main.tblMain.getModel();
         int employeeId = employeeListModel.getRowCount() + 1;
         employeeListModel.addRow(new Object[]{employeeId, emp.getName(),
-            emp.getSurname(), emp.getBirthdate(), emp.getCity(),
-            emp.getCountry(), emp.getStreet(), emp.getZipCode(), emp.getPosition()});
+            emp.getSurname(), emp.getBirthDate(), emp.getCity(),
+            emp.getCountry(), emp.getStreet(), emp.getZipCode(),
+            emp.getPosition()});
         emp.setId(employeeId);
-        EmployeeService.getEmpoyeeList().add(emp);
+    }
+
+    public static void editEmployee(Integer idEmployee, String newName,
+            String newSurename, String newBirthDate, String newCountry,
+            String newCity, String newStreet, String newZipCode, 
+            String newPosition) {
+        DefaultTableModel employeeListModel = (DefaultTableModel) 
+                Main.tblMain.getModel();
+        employeeListModel.setValueAt(newName, idEmployee - 1, 1);
+        employeeListModel.setValueAt(newSurename, idEmployee - 1, 2);
+        employeeListModel.setValueAt(newBirthDate, idEmployee - 1, 3);
+        employeeListModel.setValueAt(newCountry, idEmployee - 1, 4);
+        employeeListModel.setValueAt(newCity, idEmployee - 1, 5);
+        employeeListModel.setValueAt(newStreet, idEmployee - 1, 6);
+        employeeListModel.setValueAt(newZipCode, idEmployee - 1, 7);
+        employeeListModel.setValueAt(newPosition, idEmployee - 1, 8);
+        EmployeeService.editEmployee(idEmployee, newName, newSurename,
+                newBirthDate, newCountry, newCity, newStreet, newZipCode,
+                newPosition);
     }
 
     @SuppressWarnings("unchecked")
@@ -49,6 +71,7 @@ public class Main extends javax.swing.JFrame {
         jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Main");
 
         tblMain.setAutoCreateRowSorter(true);
         tblMain.setModel(new javax.swing.table.DefaultTableModel(
@@ -62,6 +85,11 @@ public class Main extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tblMain);
 
         btnDelete.setText("Delete");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
 
         btnEdite.setText("Edite");
         btnEdite.addActionListener(new java.awt.event.ActionListener() {
@@ -144,8 +172,19 @@ public class Main extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEditeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditeActionPerformed
-        Edit edit = new Edit();
-        edit.setVisible(true);
+
+        int selectedRow = Main.tblMain.getSelectedRow();
+
+        DefaultTableModel employeeListModel = (DefaultTableModel) 
+                Main.tblMain.getModel();
+        if (selectedRow != -1) {
+            Object value = employeeListModel.getValueAt(selectedRow, ID);
+            Integer employeeId = Integer.parseInt(value.toString());
+            Employee foundEmployee = EmployeeService.getById(employeeId);
+            Edit edit = new Edit(foundEmployee);
+
+            edit.setVisible(true);
+        }
     }//GEN-LAST:event_btnEditeActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
@@ -156,6 +195,21 @@ public class Main extends javax.swing.JFrame {
     private void btnShowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowActionPerformed
         System.out.println(EmployeeService.getEmpoyeeList());
     }//GEN-LAST:event_btnShowActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+
+        int selectedRow = Main.tblMain.getSelectedRow();
+        DefaultTableModel employeeListModel = (DefaultTableModel) 
+                Main.tblMain.getModel();
+
+        if (selectedRow != -1) {
+            Object value = employeeListModel.getValueAt(selectedRow, ID);
+            Integer employeeId = Integer.parseInt(value.toString());
+            EmployeeService.deleteEmployee(employeeId);
+            employeeListModel.removeRow(selectedRow);
+
+        }
+    }//GEN-LAST:event_btnDeleteActionPerformed
 
     public static void main(String args[]) {
 

@@ -48,7 +48,7 @@ public class Employee {
         this.zipCode = zipCode;
     }
 
-    public long getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -60,7 +60,7 @@ public class Employee {
         return surname;
     }
 
-    public String getBirthdate() {
+    public String getBirthDate() {
         return birthdate;
     }
 
@@ -88,9 +88,6 @@ public class Employee {
         this.id = id;
     }
 
-    public boolean isValid() {
-        return !this.name.isEmpty();
-    }
 
     public void setName(String name) {
         this.name = name;
@@ -122,6 +119,10 @@ public class Employee {
 
     public void setPosition(Position position) {
         this.position = position;
+    }
+    
+    public boolean isValid() {
+        return !this.name.isEmpty();
     }
 
     @Override

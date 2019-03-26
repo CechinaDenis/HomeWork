@@ -34,10 +34,4 @@ public class BookKeeper extends Employee{
             String country, String city, String Street, String zipCode) {
         super(name, surname, birthdate, country, city, Street, zipCode);
     }
-
-    @Override
-    public String toString() {
-        return super.toString();
-    }
-    
 }

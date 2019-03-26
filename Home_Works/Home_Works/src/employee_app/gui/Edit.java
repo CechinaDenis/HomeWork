@@ -1,12 +1,26 @@
 package employee_app.gui;
 
+import employee_app.gui.employee_manager.Employee;
+import employee_app.gui.employee_manager.Position;
+
 /**
  * @author Admin
  */
 public class Edit extends javax.swing.JFrame {
 
-    public Edit() {
+    private Employee emp;
+
+    public Edit(Employee emp) {
         initComponents();
+        txtFldName.setText(emp.getName());
+        txtFldSurename.setText(emp.getSurname());
+        formTxtFldBirthdate.setText(emp.getBirthDate());
+        txtFldCountry.setText(emp.getCountry());
+        txtFldCity.setText(emp.getCity());
+        txtFldStreet.setText(emp.getStreet());
+        txtFldZipCode.setText(emp.getZipCode());
+        cmbBoxPossition.setSelectedItem(emp.getPosition().toString());
+        this.emp = emp;
     }
 
     @SuppressWarnings("unchecked")
@@ -27,10 +41,12 @@ public class Edit extends javax.swing.JFrame {
         txtFldCity = new java.awt.TextField();
         lblStreet = new javax.swing.JLabel();
         txtFldName = new java.awt.TextField();
-        txtFldName3 = new java.awt.TextField();
+        txtFldStreet = new java.awt.TextField();
+        btnSave = new javax.swing.JButton();
         cmbBoxPossition = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Edit");
 
         txtFldSurename.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         txtFldSurename.addActionListener(new java.awt.event.ActionListener() {
@@ -49,8 +65,8 @@ public class Edit extends javax.swing.JFrame {
             }
         });
 
-        formTxtFldBirthdate.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd/MM/yyyy"))));
-        formTxtFldBirthdate.setText("DD/MM/YYYY");
+        formTxtFldBirthdate.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("yyyy-MM-dd"))));
+        formTxtFldBirthdate.setToolTipText("YYYY-MM-DD");
         formTxtFldBirthdate.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
         lblPossition.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -95,14 +111,22 @@ public class Edit extends javax.swing.JFrame {
             }
         });
 
-        txtFldName3.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        txtFldName3.addActionListener(new java.awt.event.ActionListener() {
+        txtFldStreet.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        txtFldStreet.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtFldName3ActionPerformed(evt);
+                txtFldStreetActionPerformed(evt);
             }
         });
 
-        cmbBoxPossition.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select", "BookKeeper", "Manager", "Programmer", "Salesman", "Technician" }));
+        btnSave.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btnSave.setText("Save");
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveActionPerformed(evt);
+            }
+        });
+
+        cmbBoxPossition.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Book Keeper", "HR Manager", "Manager", "Programmer", "Salesman", "Technician" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -112,37 +136,42 @@ public class Edit extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblCounrty)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtFldCountry, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblCity)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtFldCity, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblName)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtFldName, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblSurename)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtFldSurename, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblBirthdate)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(formTxtFldBirthdate, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblStreet)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtFldName3, javax.swing.GroupLayout.PREFERRED_SIZE, 401, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblZipCode)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtFldZipCode, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addComponent(lblPossition)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cmbBoxPossition, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(cmbBoxPossition, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblCounrty)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtFldCountry, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblCity)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtFldCity, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblName)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtFldName, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblSurename)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtFldSurename, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblBirthdate)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(formTxtFldBirthdate, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblStreet)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtFldStreet, javax.swing.GroupLayout.PREFERRED_SIZE, 401, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblZipCode)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtFldZipCode, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -163,19 +192,20 @@ public class Edit extends javax.swing.JFrame {
                     .addComponent(txtFldCountry, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
                     .addComponent(txtFldCity, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
                     .addComponent(lblCounrty, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(28, 28, 28)
+                .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtFldName3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtFldStreet, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lblZipCode, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 5, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(txtFldZipCode, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(lblStreet, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(28, 28, 28)
+                .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblPossition, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cmbBoxPossition, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(30, 30, 30))
+                    .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmbBoxPossition, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -201,18 +231,32 @@ public class Edit extends javax.swing.JFrame {
 
     }//GEN-LAST:event_txtFldNameActionPerformed
 
-    private void txtFldName3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFldName3ActionPerformed
+    private void txtFldStreetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFldStreetActionPerformed
 
-    }//GEN-LAST:event_txtFldName3ActionPerformed
+    }//GEN-LAST:event_txtFldStreetActionPerformed
+
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+        
+        String position = cmbBoxPossition.getSelectedItem().toString();
+        
+        Main.editEmployee(this.emp.getId(), txtFldName.getText(),
+                txtFldSurename.getText(), formTxtFldBirthdate.getText(),
+                txtFldCountry.getText(), txtFldCity.getText(),
+                txtFldStreet.getText(), txtFldZipCode.getText(), position);
+
+        this.setVisible(false);
+
+    }//GEN-LAST:event_btnSaveActionPerformed
 
     public static void main(String args[]) {
 
         java.awt.EventQueue.invokeLater(() -> {
-            new Edit().setVisible(true);
+            new Edit(null).setVisible(true);
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnSave;
     private javax.swing.JComboBox<String> cmbBoxPossition;
     private javax.swing.JFormattedTextField formTxtFldBirthdate;
     private javax.swing.JLabel lblBirthdate;
@@ -226,7 +270,7 @@ public class Edit extends javax.swing.JFrame {
     private java.awt.TextField txtFldCity;
     private java.awt.TextField txtFldCountry;
     private java.awt.TextField txtFldName;
-    private java.awt.TextField txtFldName3;
+    private java.awt.TextField txtFldStreet;
     private java.awt.TextField txtFldSurename;
     private java.awt.TextField txtFldZipCode;
     // End of variables declaration//GEN-END:variables
