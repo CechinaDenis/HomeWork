@@ -15,12 +15,12 @@ public class EmployeeService {
         return EMPLOYEE_LIST;
     }
 
-    public static void editEmployee(Integer idEmployee, String newName,
+    public static void editEmployee(Integer empId, String newName,
             String newSurename, String newBirthDate, String newCountry,
             String newCity, String newStreet, String newZipCode, String newPosition) {
         int index;
         for (index = 0; index < EMPLOYEE_LIST.size(); index++) {
-            if (idEmployee.equals(EMPLOYEE_LIST.get(index).getId())) {
+            if (empId.equals(EMPLOYEE_LIST.get(index).getId())) {
                 break;
             }
         }
@@ -35,16 +35,22 @@ public class EmployeeService {
 
     }
 
-    public static void deleteEmployee(Integer idEmployee) {
-        
+    public static void deleteEmployee(Integer empId) {
+
         int index;
-        
+
         for (index = 0; index < EMPLOYEE_LIST.size(); index++) {
-            if (idEmployee.equals(EMPLOYEE_LIST.get(index).getId())) {
+            if (empId.equals(EMPLOYEE_LIST.get(index).getId())) {
                 break;
             }
         }
+
         EMPLOYEE_LIST.remove(index);
+        for (; index < EMPLOYEE_LIST.size(); index++) {
+
+            EMPLOYEE_LIST.get(index).setId(empId++);
+
+        }
     }
 
     public static Employee getById(Integer id) {

@@ -236,9 +236,9 @@ public class Edit extends javax.swing.JFrame {
     }//GEN-LAST:event_txtFldStreetActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        
+
         String position = cmbBoxPossition.getSelectedItem().toString();
-        
+
         Main.editEmployee(this.emp.getId(), txtFldName.getText(),
                 txtFldSurename.getText(), formTxtFldBirthdate.getText(),
                 txtFldCountry.getText(), txtFldCity.getText(),

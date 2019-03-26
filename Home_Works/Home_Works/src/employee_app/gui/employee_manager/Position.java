@@ -16,10 +16,10 @@ public enum Position {
     private Position(String name) {
         this.name = name;
     }
-    
-    public static Position getByPositionName(String positionName){
+
+    public static Position getByPositionName(String positionName) {
         for (Position pos : Position.values()) {
-            if (pos.name.equals(positionName)){
+            if (pos.name.equals(positionName)) {
                 return pos;
             }
         }

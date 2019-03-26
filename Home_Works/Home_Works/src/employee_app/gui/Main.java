@@ -10,6 +10,7 @@ import javax.swing.table.DefaultTableModel;
 public class Main extends javax.swing.JFrame {
 
     private final int ID = 0;
+    private final int COLUMN = 0;
 
     public static void addEmployee(Employee emp) {
         if (emp.isValid()) {
@@ -24,33 +25,40 @@ public class Main extends javax.swing.JFrame {
     }
 
     private static void addEmployeeToList(Employee emp) {
-        DefaultTableModel employeeListModel = (DefaultTableModel) 
-                Main.tblMain.getModel();
+        DefaultTableModel employeeListModel = (DefaultTableModel) Main.tblMain.getModel();
         int employeeId = employeeListModel.getRowCount() + 1;
         employeeListModel.addRow(new Object[]{employeeId, emp.getName(),
-            emp.getSurname(), emp.getBirthDate(), emp.getCity(),
-            emp.getCountry(), emp.getStreet(), emp.getZipCode(),
+            emp.getSurname(), emp.getBirthDate(), emp.getCountry(),
+            emp.getCity(), emp.getStreet(), emp.getZipCode(),
             emp.getPosition()});
         emp.setId(employeeId);
     }
 
-    public static void editEmployee(Integer idEmployee, String newName,
+    public static void editEmployee(Integer empId, String newName,
             String newSurename, String newBirthDate, String newCountry,
-            String newCity, String newStreet, String newZipCode, 
+            String newCity, String newStreet, String newZipCode,
             String newPosition) {
-        DefaultTableModel employeeListModel = (DefaultTableModel) 
-                Main.tblMain.getModel();
-        employeeListModel.setValueAt(newName, idEmployee - 1, 1);
-        employeeListModel.setValueAt(newSurename, idEmployee - 1, 2);
-        employeeListModel.setValueAt(newBirthDate, idEmployee - 1, 3);
-        employeeListModel.setValueAt(newCountry, idEmployee - 1, 4);
-        employeeListModel.setValueAt(newCity, idEmployee - 1, 5);
-        employeeListModel.setValueAt(newStreet, idEmployee - 1, 6);
-        employeeListModel.setValueAt(newZipCode, idEmployee - 1, 7);
-        employeeListModel.setValueAt(newPosition, idEmployee - 1, 8);
-        EmployeeService.editEmployee(idEmployee, newName, newSurename,
+
+        DefaultTableModel employeeListModel = (DefaultTableModel) Main.tblMain.getModel();
+        employeeListModel.setValueAt(newName, empId - 1, 1);
+        employeeListModel.setValueAt(newSurename, empId - 1, 2);
+        employeeListModel.setValueAt(newBirthDate, empId - 1, 3);
+        employeeListModel.setValueAt(newCountry, empId - 1, 4);
+        employeeListModel.setValueAt(newCity, empId - 1, 5);
+        employeeListModel.setValueAt(newStreet, empId - 1, 6);
+        employeeListModel.setValueAt(newZipCode, empId - 1, 7);
+        employeeListModel.setValueAt(newPosition, empId - 1, 8);
+        EmployeeService.editEmployee(empId, newName, newSurename,
                 newBirthDate, newCountry, newCity, newStreet, newZipCode,
                 newPosition);
+    }
+
+    private void editEmployeeId(int empId) {
+
+        DefaultTableModel employeeListModel = (DefaultTableModel) Main.tblMain.getModel();
+        for (int i = empId - 1; i < employeeListModel.getRowCount(); i++) {
+            employeeListModel.setValueAt(String.valueOf(empId++), i, COLUMN);
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -175,8 +183,7 @@ public class Main extends javax.swing.JFrame {
 
         int selectedRow = Main.tblMain.getSelectedRow();
 
-        DefaultTableModel employeeListModel = (DefaultTableModel) 
-                Main.tblMain.getModel();
+        DefaultTableModel employeeListModel = (DefaultTableModel) Main.tblMain.getModel();
         if (selectedRow != -1) {
             Object value = employeeListModel.getValueAt(selectedRow, ID);
             Integer employeeId = Integer.parseInt(value.toString());
@@ -199,15 +206,14 @@ public class Main extends javax.swing.JFrame {
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
 
         int selectedRow = Main.tblMain.getSelectedRow();
-        DefaultTableModel employeeListModel = (DefaultTableModel) 
-                Main.tblMain.getModel();
+        DefaultTableModel employeeListModel = (DefaultTableModel) Main.tblMain.getModel();
 
         if (selectedRow != -1) {
             Object value = employeeListModel.getValueAt(selectedRow, ID);
             Integer employeeId = Integer.parseInt(value.toString());
             EmployeeService.deleteEmployee(employeeId);
             employeeListModel.removeRow(selectedRow);
-
+            editEmployeeId(employeeId);
         }
     }//GEN-LAST:event_btnDeleteActionPerformed
 

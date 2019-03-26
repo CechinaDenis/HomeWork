@@ -1,8 +1,8 @@
 package employee_app.gui;
 
 import employee_app.gui.employee_manager.Employee;
-import employee_app.gui.service.EmployeeService;
 import employee_app.gui.employee_manager.Position;
+import employee_app.gui.service.EmployeeService;
 
 /**
  * @author Admin
@@ -211,35 +211,35 @@ public class Add extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtFldNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFldNameActionPerformed
-        
+
     }//GEN-LAST:event_txtFldNameActionPerformed
 
     private void txtFldSurenameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFldSurenameActionPerformed
-        
+
     }//GEN-LAST:event_txtFldSurenameActionPerformed
 
     private void txtFldCountryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFldCountryActionPerformed
-        
+
     }//GEN-LAST:event_txtFldCountryActionPerformed
 
     private void txtFldCityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFldCityActionPerformed
-        
+
     }//GEN-LAST:event_txtFldCityActionPerformed
 
     private void txtFldStreetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFldStreetActionPerformed
-        
+
     }//GEN-LAST:event_txtFldStreetActionPerformed
 
     private void txtFldZipCodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFldZipCodeActionPerformed
-        
+
     }//GEN-LAST:event_txtFldZipCodeActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        
+
         String position = cmbBoxPossition.getSelectedItem().toString();
         Employee emp = new Employee(txtFldName.getText(), txtFldSurename.getText(),
-            formTxtFldBirthdate.getText(), txtFldCountry.getText(), 
-            txtFldCity.getText(), txtFldStreet.getText(), txtFldZipCode.getText());
+                formTxtFldBirthdate.getText(), txtFldCountry.getText(),
+                txtFldCity.getText(), txtFldStreet.getText(), txtFldZipCode.getText());
         EmployeeService.getEmpoyeeList().add(emp);
         emp.setPosition(Position.getByPositionName(position));
         Main.addEmployee(emp);

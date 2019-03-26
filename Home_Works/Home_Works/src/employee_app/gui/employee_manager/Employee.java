@@ -88,7 +88,6 @@ public class Employee {
         this.id = id;
     }
 
-
     public void setName(String name) {
         this.name = name;
     }
@@ -120,7 +119,7 @@ public class Employee {
     public void setPosition(Position position) {
         this.position = position;
     }
-    
+
     public boolean isValid() {
         return !this.name.isEmpty();
     }
