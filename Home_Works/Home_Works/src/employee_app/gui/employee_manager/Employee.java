@@ -123,13 +123,10 @@ public class Employee {
     public boolean isValid() {
         return !this.name.isEmpty();
     }
-
+    
     @Override
     public String toString() {
-        return "Employee{" + "ID=" + id + ", name=" + name + ", surname="
-                + surname + ", birthdate=" + birthdate + ", country=" + country
-                + ", city=" + city + ", Street=" + Street + ", zipCode="
-                + zipCode + ", position=" + position + "}\n";
+        return name + "," + surname + "," + birthdate + "," + country + "," 
+                + city + "," + Street + "," + zipCode + "," + position.getName() + "\n";
     }
-
 }

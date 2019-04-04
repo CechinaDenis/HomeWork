@@ -1,6 +1,7 @@
 package employee_app.gui;
 
 import employee_app.gui.employee_manager.Employee;
+import employee_app.gui.employee_manager.Position;
 import employee_app.gui.service.EmployeeService;
 import javax.swing.table.DefaultTableModel;
 
@@ -16,7 +17,7 @@ public class Main extends javax.swing.JFrame {
         if (emp.isValid()) {
             addEmployeeToList(emp);
         } else {
-            System.out.println("error");
+            System.err.println("Error Line 20");
         }
     }
 
@@ -30,14 +31,14 @@ public class Main extends javax.swing.JFrame {
         employeeListModel.addRow(new Object[]{employeeId, emp.getName(),
             emp.getSurname(), emp.getBirthDate(), emp.getCountry(),
             emp.getCity(), emp.getStreet(), emp.getZipCode(),
-            emp.getPosition()});
+            emp.getPosition().getName()});
         emp.setId(employeeId);
     }
 
     public static void editEmployee(Integer empId, String newName,
             String newSurename, String newBirthDate, String newCountry,
             String newCity, String newStreet, String newZipCode,
-            String newPosition) {
+            Position newPosition) {
 
         DefaultTableModel employeeListModel = (DefaultTableModel) Main.tblMain.getModel();
         employeeListModel.setValueAt(newName, empId - 1, 1);
@@ -47,7 +48,7 @@ public class Main extends javax.swing.JFrame {
         employeeListModel.setValueAt(newCity, empId - 1, 5);
         employeeListModel.setValueAt(newStreet, empId - 1, 6);
         employeeListModel.setValueAt(newZipCode, empId - 1, 7);
-        employeeListModel.setValueAt(newPosition, empId - 1, 8);
+        employeeListModel.setValueAt(newPosition.getName(), empId - 1, 8);
         EmployeeService.editEmployee(empId, newName, newSurename,
                 newBirthDate, newCountry, newCity, newStreet, newZipCode,
                 newPosition);
@@ -123,8 +124,18 @@ public class Main extends javax.swing.JFrame {
         });
 
         btnImport.setText("Import");
+        btnImport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImportActionPerformed(evt);
+            }
+        });
 
         btnExport.setText("Export");
+        btnExport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExportActionPerformed(evt);
+            }
+        });
 
         jMenu1.setText("File");
         jMenuBar1.add(jMenu1);
@@ -216,6 +227,16 @@ public class Main extends javax.swing.JFrame {
             editEmployeeId(employeeId);
         }
     }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void btnImportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportActionPerformed
+        Import imp = new Import();
+        imp.setVisible(true);
+    }//GEN-LAST:event_btnImportActionPerformed
+
+    private void btnExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportActionPerformed
+        Export export = new Export();
+        export.setVisible(true);
+    }//GEN-LAST:event_btnExportActionPerformed
 
     public static void main(String args[]) {
 

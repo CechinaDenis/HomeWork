@@ -17,7 +17,7 @@ public class EmployeeService {
 
     public static void editEmployee(Integer empId, String newName,
             String newSurename, String newBirthDate, String newCountry,
-            String newCity, String newStreet, String newZipCode, String newPosition) {
+            String newCity, String newStreet, String newZipCode, Position newPosition) {
         int index;
         for (index = 0; index < EMPLOYEE_LIST.size(); index++) {
             if (empId.equals(EMPLOYEE_LIST.get(index).getId())) {
@@ -31,7 +31,7 @@ public class EmployeeService {
         EMPLOYEE_LIST.get(index).setCity(newCity);
         EMPLOYEE_LIST.get(index).setStreet(newStreet);
         EMPLOYEE_LIST.get(index).setZipCode(newZipCode);
-        EMPLOYEE_LIST.get(index).setPosition(Position.getByPositionName(newPosition));
+        EMPLOYEE_LIST.get(index).setPosition(newPosition);
 
     }
 
@@ -46,10 +46,10 @@ public class EmployeeService {
         }
 
         EMPLOYEE_LIST.remove(index);
+        
         for (; index < EMPLOYEE_LIST.size(); index++) {
 
             EMPLOYEE_LIST.get(index).setId(empId++);
-
         }
     }
 

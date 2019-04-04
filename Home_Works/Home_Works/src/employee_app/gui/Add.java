@@ -5,7 +5,7 @@ import employee_app.gui.employee_manager.Position;
 import employee_app.gui.service.EmployeeService;
 
 /**
- * @author Admin
+ * @author Denis Cechina
  */
 public class Add extends javax.swing.JFrame {
 
@@ -243,13 +243,13 @@ public class Add extends javax.swing.JFrame {
         EmployeeService.getEmpoyeeList().add(emp);
         emp.setPosition(Position.getByPositionName(position));
         Main.addEmployee(emp);
-        txtFldName.setText("");
-        txtFldSurename.setText("");
-        txtFldCountry.setText("");
-        txtFldCity.setText("");
-        txtFldStreet.setText("");
-        txtFldZipCode.setText("");
-        this.setVisible(false);
+//        txtFldName.setText("");
+//        txtFldSurename.setText("");
+//        txtFldCountry.setText("");
+//        txtFldCity.setText("");
+//        txtFldStreet.setText("");
+//        txtFldZipCode.setText("");
+//        this.setVisible(false);
     }//GEN-LAST:event_btnAddActionPerformed
 
     public static void main(String args[]) {

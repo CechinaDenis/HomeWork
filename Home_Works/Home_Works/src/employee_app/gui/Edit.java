@@ -238,11 +238,11 @@ public class Edit extends javax.swing.JFrame {
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
 
         String position = cmbBoxPossition.getSelectedItem().toString();
-
+        Position pos = Position.getByPositionName(position);
         Main.editEmployee(this.emp.getId(), txtFldName.getText(),
                 txtFldSurename.getText(), formTxtFldBirthdate.getText(),
                 txtFldCountry.getText(), txtFldCity.getText(),
-                txtFldStreet.getText(), txtFldZipCode.getText(), position);
+                txtFldStreet.getText(), txtFldZipCode.getText(), pos);
 
         this.setVisible(false);
 

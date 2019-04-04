@@ -16,6 +16,9 @@ public enum Position {
     private Position(String name) {
         this.name = name;
     }
+    public String getName(){
+        return this.name;
+    }
 
     public static Position getByPositionName(String positionName) {
         for (Position pos : Position.values()) {
