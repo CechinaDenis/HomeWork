@@ -5,13 +5,14 @@ package employee_app.gui.employee_manager;
  */
 public class Employee {
 
+    private Integer refRow;
     private Integer id;
     private String name;
     private String surname;
-    private String birthdate;
+    private String birthDate;
     private String country;
     private String city;
-    private String Street;
+    private String street;
     private String zipCode;
     protected Position position;
 
@@ -20,32 +21,38 @@ public class Employee {
         this.surname = surname;
     }
 
-    public Employee(String name, String surname, String birthdate) {
+    public Employee(String name, String surname, String birthDate) {
         this(name, surname);
-        this.birthdate = birthdate;
+        this.birthDate = birthDate;
     }
 
-    public Employee(String name, String surname, String birthdate, String country) {
-        this(name, surname, birthdate);
+    public Employee(String name, String surname, String birthDate, String country) {
+        this(name, surname, birthDate);
         this.country = country;
     }
 
-    public Employee(String name, String surname, String birthdate, String country,
+    public Employee(String name, String surname, String birthDate, String country,
             String city) {
-        this(name, surname, birthdate, country);
+        this(name, surname, birthDate, country);
         this.city = city;
     }
 
-    public Employee(String name, String surname, String birthdate, String country,
-            String city, String Street) {
-        this(name, surname, birthdate, country, city);
-        this.Street = Street;
+    public Employee(String name, String surname, String birthDate, String country,
+            String city, String street) {
+        this(name, surname, birthDate, country, city);
+        this.street = street;
     }
 
-    public Employee(String name, String surname, String birthdate, String country,
-            String city, String Street, String zipCode) {
-        this(name, surname, birthdate, country, city, Street);
+    public Employee(String name, String surname, String birthDate, String country,
+            String city, String street, String zipCode) {
+        this(name, surname, birthDate, country, city, street);
         this.zipCode = zipCode;
+    }
+
+    public Employee(String name, String surname, String birthDate, String country,
+            String city, String street, String zipCode, Position position) {
+        this(name, surname, birthDate, country, city, street, zipCode);
+        this.position = position;
     }
 
     public Integer getId() {
@@ -61,7 +68,7 @@ public class Employee {
     }
 
     public String getBirthDate() {
-        return birthdate;
+        return birthDate;
     }
 
     public String getCountry() {
@@ -73,7 +80,7 @@ public class Employee {
     }
 
     public String getStreet() {
-        return Street;
+        return street;
     }
 
     public String getZipCode() {
@@ -82,6 +89,10 @@ public class Employee {
 
     public Position getPosition() {
         return position;
+    }
+
+    public Integer getRefRow() {
+        return refRow;
     }
 
     public void setId(Integer id) {
@@ -96,8 +107,8 @@ public class Employee {
         this.surname = surname;
     }
 
-    public void setBirthdate(String birthdate) {
-        this.birthdate = birthdate;
+    public void setBirthDate(String birthDate) {
+        this.birthDate = birthDate;
     }
 
     public void setCountry(String country) {
@@ -108,8 +119,8 @@ public class Employee {
         this.city = city;
     }
 
-    public void setStreet(String Street) {
-        this.Street = Street;
+    public void setStreet(String street) {
+        this.street = street;
     }
 
     public void setZipCode(String zipCode) {
@@ -120,13 +131,19 @@ public class Employee {
         this.position = position;
     }
 
-    public boolean isValid() {
-        return !this.name.isEmpty();
+    public void setRefRow(Integer refRow) {
+        this.refRow = refRow;
     }
-    
+
+    public boolean isValid() {
+        return !(this.name.isEmpty() || this.surname.isEmpty()
+                || this.birthDate.isEmpty());
+    }
+
     @Override
     public String toString() {
-        return name + "," + surname + "," + birthdate + "," + country + "," 
-                + city + "," + Street + "," + zipCode + "," + position.getName() + "\n";
+        return name + "," + surname + "," + birthDate + "," + country + ","
+                + city + "," + street + "," + zipCode + "," + position.getName()
+                + "\n";
     }
 }

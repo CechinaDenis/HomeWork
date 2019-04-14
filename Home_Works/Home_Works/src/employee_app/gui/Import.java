@@ -1,9 +1,14 @@
 package employee_app.gui;
 
+import employee_app.gui.service.EmployeeDao;
 import employee_app.gui.service.EmployeeIOService;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.xml.parsers.ParserConfigurationException;
+import org.xml.sax.SAXException;
 
 /**
  * @author Denis Cechina
@@ -28,6 +33,7 @@ public class Import extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Import");
+        setResizable(false);
 
         btnImpCsv.setText("Import .CSV");
         btnImpCsv.addActionListener(new java.awt.event.ActionListener() {
@@ -37,10 +43,20 @@ public class Import extends javax.swing.JFrame {
         });
 
         btnImpXml.setText("Import .XML");
+        btnImpXml.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImpXmlActionPerformed(evt);
+            }
+        });
 
         btnImpJson.setText("Import .JSON");
 
         btnImpSql.setText("Import .SQL");
+        btnImpSql.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImpSqlActionPerformed(evt);
+            }
+        });
 
         jMenu1.setText("File");
         jMenuBar1.add(jMenu1);
@@ -82,16 +98,35 @@ public class Import extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnImpCsvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImpCsvActionPerformed
-        try {
-            EmployeeIOService.deserializeFromFile("D:\\Employees.csv");
-            this.setVisible(false);
-        } catch (IOException ex) {
-            Logger.getLogger(Import.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        try {
+//            EmployeeIOService.deserializeFromCSVFile("D:\\Employees");
+//            this.setVisible(false);
+//        } catch (IOException ex) {
+//            Logger.getLogger(Import.class.getName()).log(Level.SEVERE, null, ex);
+//        }
     }//GEN-LAST:event_btnImpCsvActionPerformed
+
+    private void btnImpXmlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImpXmlActionPerformed
+//        try {
+//            EmployeeIOService.deserializeFromXMLFile("D:\\Employees");
+//        } catch (ParserConfigurationException | SAXException | IOException ex) {
+//            Logger.getLogger(Import.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+    }//GEN-LAST:event_btnImpXmlActionPerformed
+
+    private void btnImpSqlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImpSqlActionPerformed
+//        try {
+//            EmployeeDao.getConnection();
+//            JOptionPane.showMessageDialog(null, "Connected");
+//        } catch (ClassNotFoundException | SQLException ex) {
+//            JOptionPane.showMessageDialog(null, "Fail to Connect");
+//            Logger.getLogger(Import.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+    }//GEN-LAST:event_btnImpSqlActionPerformed
 
     public static void main(String args[]) {
 

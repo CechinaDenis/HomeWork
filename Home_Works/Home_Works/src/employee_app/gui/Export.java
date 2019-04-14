@@ -1,12 +1,9 @@
 package employee_app.gui;
 
-import employee_app.gui.service.EmployeeService;
-import static employee_app.gui.service.EmployeeIOService.serializeToFile;
-import java.awt.Desktop;
-import java.io.File;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.sql.SQLException;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
 
 /**
  * @author Denis Cechina
@@ -16,8 +13,20 @@ public class Export extends javax.swing.JFrame {
     public Export() {
         initComponents();
     }
-    
-    private final String fileLocation = "D:\\Employees.csv";
+
+    private void serialization(String extension)
+            throws SQLException, IOException, ParserConfigurationException,
+            TransformerException {
+
+        String filePath = Main.fileSave();
+        if (filePath.endsWith(extension)) {
+            Main.serialization(filePath);
+        } else if (!filePath.endsWith(extension)) {
+            Main.serialization(filePath.concat(extension));
+        } else {
+            System.err.println("ERROR TRYING TO SAVE THE FILE");
+        }
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -32,19 +41,26 @@ public class Export extends javax.swing.JFrame {
         jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Export");
+        setResizable(false);
 
-        btnExpSql.setText("Expoart .SQL");
+        btnExpSql.setText("Export .SQL");
 
-        btnExpCsv.setText("Expoart .CSV");
+        btnExpCsv.setText("Export .CSV");
         btnExpCsv.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnExpCsvActionPerformed(evt);
             }
         });
 
-        btnExpXml.setText("Expoart .XML");
+        btnExpXml.setText("Export .XML");
+        btnExpXml.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExpXmlActionPerformed(evt);
+            }
+        });
 
-        btnExpJson.setText("Expoart .JSON");
+        btnExpJson.setText("Export .JSON");
 
         jMenu1.setText("File");
         jMenuBar1.add(jMenu1);
@@ -86,19 +102,32 @@ public class Export extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnExpCsvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExpCsvActionPerformed
-        
-        try {
-            serializeToFile(EmployeeService.getEmpoyeeList(), fileLocation);
-            Desktop.getDesktop().open(new File("D:\\"));
-            this.setVisible(false);
-        } catch (IOException ex) {
-            Logger.getLogger(Export.class.getName()).log(Level.SEVERE, null, ex);
-        }
 
+        try {
+            serialization(".csv");
+        } catch (ParserConfigurationException | TransformerException
+                | SQLException | IOException ex) {
+            System.err.println("ParserConfigurationException "
+                    + "| TransformerException |SQLException | IOException ex");
+        }
+        this.setVisible(false);
     }//GEN-LAST:event_btnExpCsvActionPerformed
+
+    private void btnExpXmlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExpXmlActionPerformed
+
+        try {
+            serialization(".xml");
+        } catch (ParserConfigurationException | TransformerException
+                | SQLException | IOException ex) {
+            System.err.println("ParserConfigurationException "
+                    + "| TransformerException | SQLException | IOException ex");
+        }
+        this.setVisible(false);
+    }//GEN-LAST:event_btnExpXmlActionPerformed
 
     public static void main(String args[]) {
 

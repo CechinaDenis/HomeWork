@@ -7,8 +7,8 @@ import employee_app.gui.employee_manager.Employee;
  */
 public class HrManager extends Employee {
                 
-    public HrManager(String name, String surename){
-        super(name, surename);
+    public HrManager(String name, String surname){
+        super(name, surname);
     }
 
     public HrManager(String name, String surname, String birthdate) {

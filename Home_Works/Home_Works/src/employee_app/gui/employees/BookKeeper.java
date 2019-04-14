@@ -7,8 +7,8 @@ import employee_app.gui.employee_manager.Employee;
  */
 public class BookKeeper extends Employee{
     
-    public BookKeeper(String name, String surename){
-        super(name, surename);
+    public BookKeeper(String name, String surname){
+        super(name, surname);
     }
 
     public BookKeeper(String name, String surname, String birthdate) {

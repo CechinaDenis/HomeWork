@@ -7,8 +7,8 @@ import employee_app.gui.employee_manager.Employee;
  */
 public class Technician extends Employee {
                 
-    public Technician(String name, String surename){
-        super(name, surename);
+    public Technician(String name, String surname){
+        super(name, surname);
     }
 
     public Technician(String name, String surname, String birthdate) {

@@ -3,65 +3,157 @@ package employee_app.gui;
 import employee_app.gui.employee_manager.Employee;
 import employee_app.gui.employee_manager.Position;
 import employee_app.gui.service.EmployeeService;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
 
 /**
  * @author Denis Cechina
  */
 public class Main extends javax.swing.JFrame {
 
-    private final int ID = 0;
     private final int COLUMN = 0;
 
-    public static void addEmployee(Employee emp) {
-        if (emp.isValid()) {
-            addEmployeeToList(emp);
-        } else {
-            System.err.println("Error Line 20");
+    private void loadEmployees() {
+        try {
+            ArrayList<Employee> all = EmployeeService.getAll();
+            JOptionPane.showMessageDialog(null, "SQL Connection Established ");
+            DefaultTableModel employeeListModel = (DefaultTableModel) Main.tblMain.getModel();
+            for (Employee emp : all) {
+                int employeeId = employeeListModel.getRowCount() + 1;
+                employeeListModel.addRow(new Object[]{employeeId, emp.getName(),
+                    emp.getSurname(), emp.getBirthDate(), emp.getCountry(),
+                    emp.getCity(), emp.getStreet(), emp.getZipCode(),
+                    emp.getPosition().toString()});
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "SQL Connection Faild,\nPlease "
+                    + "try one more time!!!");
         }
+    }
+
+    public static int addEmployee(Employee emp) {
+        if (emp.isValid()) {
+            int affectedRows = addEmployeeToList(emp);
+            return affectedRows;
+        } else {
+            System.err.println("User didn't ENTER Employee ( * ) Fields!!!");
+            return -1;
+        }
+    }
+
+    private static int addEmployeeToList(Employee emp) {
+        int affectedRows ;
+        try {
+            affectedRows = EmployeeService.add(emp);
+            if (affectedRows == 1) {
+                DefaultTableModel employeeListModel = (DefaultTableModel) Main.tblMain.getModel();
+                int rowRef = employeeListModel.getRowCount() + 1;
+                employeeListModel.addRow(new Object[]{rowRef, emp.getName(),
+                    emp.getSurname(), emp.getBirthDate(), emp.getCountry(),
+                    emp.getCity(), emp.getStreet(), emp.getZipCode(),
+                    emp.getPosition().toString()});
+                return affectedRows;
+            }
+
+        } catch (SQLException ex) {
+            System.err.println("ERROR Main.addEmployeeToList");
+            return -2;
+        }
+        return affectedRows;
+    }
+
+    public static void editEmployee(int idEmployee, String newName,
+            String newSurname, String newBirthDate, String newCountry,
+            String newCity, String newStreet, String newZipCode,
+            Position newPosition, int rowRef)
+            throws SQLException {
+        DefaultTableModel employeeListModel = (DefaultTableModel) Main.tblMain
+                .getModel();
+        employeeListModel.setValueAt(newName, rowRef - 1, 1);
+        employeeListModel.setValueAt(newSurname, rowRef - 1, 2);
+        employeeListModel.setValueAt(newBirthDate, rowRef - 1, 3);
+        employeeListModel.setValueAt(newCountry, rowRef - 1, 4);
+        employeeListModel.setValueAt(newCity, rowRef - 1, 5);
+        employeeListModel.setValueAt(newStreet, rowRef - 1, 6);
+        employeeListModel.setValueAt(newZipCode, rowRef - 1, 7);
+        employeeListModel.setValueAt(newPosition, rowRef - 1, 8);
+        EmployeeService.edit(idEmployee, newName, newSurname, newBirthDate,
+                newCountry, newCity, newStreet, newZipCode, newPosition, rowRef);
+    }
+
+    private void editEmployeeTblRef(int rowRef) {
+
+        DefaultTableModel employeeListModel = (DefaultTableModel) Main.tblMain.getModel();
+        for (int i = rowRef - 1; i < employeeListModel.getRowCount(); i++) {
+            employeeListModel.setValueAt(String.valueOf(rowRef++), i, COLUMN);
+        }
+    }
+
+    private void showEmployees() {
+        try {
+            ArrayList<Employee> all = EmployeeService.getAll();
+            for (Employee emp : all) {
+                System.out.println(emp.toString());
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public static void serialization(String filePath) 
+            throws SQLException, IOException, ParserConfigurationException, 
+            TransformerException {
+
+        EmployeeService.serialization(filePath);
+    }
+    
+    public static String fileSave(){
+        return EmployeeService.fileSave();
     }
 
     public Main() {
         initComponents();
+        this.loadEmployees();
     }
 
-    private static void addEmployeeToList(Employee emp) {
-        DefaultTableModel employeeListModel = (DefaultTableModel) Main.tblMain.getModel();
-        int employeeId = employeeListModel.getRowCount() + 1;
-        employeeListModel.addRow(new Object[]{employeeId, emp.getName(),
-            emp.getSurname(), emp.getBirthDate(), emp.getCountry(),
-            emp.getCity(), emp.getStreet(), emp.getZipCode(),
-            emp.getPosition().getName()});
-        emp.setId(employeeId);
-    }
-
-    public static void editEmployee(Integer empId, String newName,
-            String newSurename, String newBirthDate, String newCountry,
-            String newCity, String newStreet, String newZipCode,
-            Position newPosition) {
-
-        DefaultTableModel employeeListModel = (DefaultTableModel) Main.tblMain.getModel();
-        employeeListModel.setValueAt(newName, empId - 1, 1);
-        employeeListModel.setValueAt(newSurename, empId - 1, 2);
-        employeeListModel.setValueAt(newBirthDate, empId - 1, 3);
-        employeeListModel.setValueAt(newCountry, empId - 1, 4);
-        employeeListModel.setValueAt(newCity, empId - 1, 5);
-        employeeListModel.setValueAt(newStreet, empId - 1, 6);
-        employeeListModel.setValueAt(newZipCode, empId - 1, 7);
-        employeeListModel.setValueAt(newPosition.getName(), empId - 1, 8);
-        EmployeeService.editEmployee(empId, newName, newSurename,
-                newBirthDate, newCountry, newCity, newStreet, newZipCode,
-                newPosition);
-    }
-
-    private void editEmployeeId(int empId) {
-
-        DefaultTableModel employeeListModel = (DefaultTableModel) Main.tblMain.getModel();
-        for (int i = empId - 1; i < employeeListModel.getRowCount(); i++) {
-            employeeListModel.setValueAt(String.valueOf(empId++), i, COLUMN);
-        }
-    }
-
+//    private final int ID = 0;
+//    private final int COLUMN = 0;
+//    private static void addEmployeeToList(Employee emp) {
+//        DefaultTableModel employeeListModel = (DefaultTableModel) Main.tblMain.getModel();
+//        int employeeId = employeeListModel.getRowCount() + 1;
+//        employeeListModel.addRow(new Object[]{employeeId, emp.getName(),
+//            emp.getSurname(), emp.getBirthDate(), emp.getCountry(),
+//            emp.getCity(), emp.getStreet(), emp.getZipCode(),
+//            emp.getPosition().getName()});
+//        emp.setId(employeeId);
+//    }
+//
+//    public static void editEmployee(Integer empId, String newName,
+//            String newSurname, String newBirthDate, String newCountry,
+//            String newCity, String newStreet, String newZipCode,
+//            Position newPosition) {
+//
+//        DefaultTableModel employeeListModel = (DefaultTableModel) Main.tblMain.getModel();
+//        employeeListModel.setValueAt(newName, empId - 1, 1);
+//        employeeListModel.setValueAt(newSurname, empId - 1, 2);
+//        employeeListModel.setValueAt(newBirthDate, empId - 1, 3);
+//        employeeListModel.setValueAt(newCountry, empId - 1, 4);
+//        employeeListModel.setValueAt(newCity, empId - 1, 5);
+//        employeeListModel.setValueAt(newStreet, empId - 1, 6);
+//        employeeListModel.setValueAt(newZipCode, empId - 1, 7);
+//        employeeListModel.setValueAt(newPosition.getName(), empId - 1, 8);
+//        EmployeeService.editEmployee(empId, newName, newSurname,
+//                newBirthDate, newCountry, newCity, newStreet, newZipCode,
+//                newPosition);
+//    }
+//
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -81,6 +173,7 @@ public class Main extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Main");
+        setResizable(false);
 
         tblMain.setAutoCreateRowSorter(true);
         tblMain.setModel(new javax.swing.table.DefaultTableModel(
@@ -88,10 +181,15 @@ public class Main extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "Name", "Surename", "Birthdate", "Country", "City", "Street", "ZIP Code", "Position"
+                "ID", "Name", "Surname", "Birth Date", "Country", "City", "Street", "ZIP Code", "Position"
             }
         ));
         jScrollPane1.setViewportView(tblMain);
+        if (tblMain.getColumnModel().getColumnCount() > 0) {
+            tblMain.getColumnModel().getColumn(0).setResizable(false);
+            tblMain.getColumnModel().getColumn(0).setPreferredWidth(4);
+            tblMain.getColumnModel().getColumn(7).setPreferredWidth(40);
+        }
 
         btnDelete.setText("Delete");
         btnDelete.addActionListener(new java.awt.event.ActionListener() {
@@ -188,43 +286,80 @@ public class Main extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEditeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditeActionPerformed
 
         int selectedRow = Main.tblMain.getSelectedRow();
-
-        DefaultTableModel employeeListModel = (DefaultTableModel) Main.tblMain.getModel();
         if (selectedRow != -1) {
-            Object value = employeeListModel.getValueAt(selectedRow, ID);
-            Integer employeeId = Integer.parseInt(value.toString());
-            Employee foundEmployee = EmployeeService.getById(employeeId);
-            Edit edit = new Edit(foundEmployee);
-
-            edit.setVisible(true);
+            DefaultTableModel employeeListModel = (DefaultTableModel) Main.tblMain.getModel();
+            Object name = employeeListModel.getValueAt(selectedRow, 1);
+            Object surname = employeeListModel.getValueAt(selectedRow, 2);
+            Object birthDate = employeeListModel.getValueAt(selectedRow, 3);
+            Employee foundEmployee = EmployeeService.getByParams(name.toString(),
+                    surname.toString(),
+                    birthDate.toString());
+            int refRow = Integer.parseInt(employeeListModel
+                    .getValueAt(selectedRow, 0).toString());
+            foundEmployee.setRefRow(refRow);
+            Edit editWindow = new Edit(foundEmployee);
+            editWindow.setVisible(true);
         }
+
+//        int selectedRow = Main.tblMain.getSelectedRow();
+//        DefaultTableModel employeeListModel = (DefaultTableModel) Main.tblMain.getModel();
+//        if (selectedRow != -1) {
+//            Object value = employeeListModel.getValueAt(selectedRow, ID);
+//            Integer employeeId = Integer.parseInt(value.toString());
+//            Employee foundEmployee = EmployeeService.getById(employeeId);
+//            Edit edit = new Edit(foundEmployee);
+//            edit.setVisible(true);
+//        }
     }//GEN-LAST:event_btnEditeActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+
         Add add = new Add();
         add.setVisible(true);
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnShowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowActionPerformed
-        System.out.println(EmployeeService.getEmpoyeeList());
+
+        showEmployees();
     }//GEN-LAST:event_btnShowActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
 
         int selectedRow = Main.tblMain.getSelectedRow();
-        DefaultTableModel employeeListModel = (DefaultTableModel) Main.tblMain.getModel();
 
         if (selectedRow != -1) {
-            Object value = employeeListModel.getValueAt(selectedRow, ID);
-            Integer employeeId = Integer.parseInt(value.toString());
-            EmployeeService.deleteEmployee(employeeId);
-            employeeListModel.removeRow(selectedRow);
-            editEmployeeId(employeeId);
+            try {
+                DefaultTableModel employeeListModel = (DefaultTableModel) Main.tblMain.getModel();
+
+                Object value = employeeListModel.getValueAt(selectedRow, 0);
+                Object name = employeeListModel.getValueAt(selectedRow, 1);
+                Object surname = employeeListModel.getValueAt(selectedRow, 2);
+                Object birthDate = employeeListModel.getValueAt(selectedRow, 3);
+
+                employeeListModel.removeRow(selectedRow);
+                Integer rowRef = Integer.parseInt(value.toString());
+                editEmployeeTblRef(rowRef);
+                int affectedRows = EmployeeService.remove(name.toString(),
+                        surname.toString(),
+                        birthDate.toString());
+                if (affectedRows == 1) {
+                    JOptionPane.showMessageDialog(null, "Employee successfully "
+                            + "deleted");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Something went wrong!!!\n"
+                            + "Please try one more time!!!");
+                }
+//            EmployeeService.deleteEmployee(employeeId);
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Something went wrong!!!\n"
+                        + "Please try one more time!!!");
+            }
         }
     }//GEN-LAST:event_btnDeleteActionPerformed
 

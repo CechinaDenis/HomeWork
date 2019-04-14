@@ -19,11 +19,13 @@
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="2"/>
+    <Property name="title" type="java.lang.String" value="Export"/>
+    <Property name="resizable" type="boolean" value="false"/>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="menuBar" type="java.lang.String" value="jMenuBar1"/>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
-    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
+    <SyntheticProperty name="generateCenter" type="boolean" value="true"/>
   </SyntheticProperties>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
@@ -79,12 +81,12 @@
   <SubComponents>
     <Component class="javax.swing.JButton" name="btnExpSql">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Expoart .SQL"/>
+        <Property name="text" type="java.lang.String" value="Export .SQL"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="btnExpCsv">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Expoart .CSV"/>
+        <Property name="text" type="java.lang.String" value="Export .CSV"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnExpCsvActionPerformed"/>
@@ -92,12 +94,15 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnExpXml">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Expoart .XML"/>
+        <Property name="text" type="java.lang.String" value="Export .XML"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnExpXmlActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnExpJson">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Expoart .JSON"/>
+        <Property name="text" type="java.lang.String" value="Export .JSON"/>
       </Properties>
     </Component>
   </SubComponents>
