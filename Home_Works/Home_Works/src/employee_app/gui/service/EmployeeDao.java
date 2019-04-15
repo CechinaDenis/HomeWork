@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * @author Denis Cechina
@@ -96,34 +97,24 @@ public class EmployeeDao {
             }
             return emp;
         } catch (SQLException ex) {
-            System.err.println("Error trying to get one employee");
+            System.err.println("Error trying to getEmployee (EmployeeDao)");
         }
         return null;
     }
 
-    public int duplicationCheck(Employee emp)
+    public int duplicationCheck(Employee emp) 
             throws SQLException {
 
-        String sql = "SELECT count(*) FROM app.employee WHERE name=? AND "
-                + "surname=? AND birth_date=?";
-        try (Connection conn = connection();
-                PreparedStatement dbStatement = conn.prepareStatement(sql)) {
-            dbStatement.setString(1, emp.getName());
-            dbStatement.setString(2, emp.getSurname());
-            dbStatement.setDate(3, Date.valueOf(emp.getBirthDate()));
-
-            
-            int result = dbStatement.getre;//<STOPED HERE
-            if (result > 0) {
-                return 1;
-            } else if (result == 0) {
-                return 0;
+        int count = 0;
+        ArrayList empList = getAll();
+        
+        Iterator <Employee> it = empList.iterator();
+        while(it.hasNext()){
+            if(emp.equals(it.next())){
+                count++;
             }
-        } catch (SQLException ex) {
-            System.err.println("ERROR WHEN TRYING TO FIND DUBLICATS");
-            throw ex;
         }
-        return -1;
+        return count;
     }
 
     public int add(Employee emp)
@@ -157,10 +148,10 @@ public class EmployeeDao {
                         + "in EmployeeDao 'add'");
                 throw ex;
             }
-        }else if(checkResult == 1){
+        } else if (checkResult >= 1) {
             return 0;
-        }else{
-            return -2;
+        } else {
+            return -1;
         }
     }
 

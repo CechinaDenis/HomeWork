@@ -253,10 +253,14 @@ public class Add extends javax.swing.JFrame {
         if (affectedRows == 1) {
             this.setVisible(false);
             JOptionPane.showMessageDialog(null, "Employee Successfully Added");
-        } else if (affectedRows == -1) {
+        } else if (affectedRows == -3) {
             JOptionPane.showMessageDialog(null, "Please ENTER Employee ( * ) Fields!!!");
-        }else if(affectedRows == 0){
+        } else if (affectedRows == 0) {
             JOptionPane.showMessageDialog(null, "Employee already exists in the Database");
+        }else if (affectedRows == -2){
+            JOptionPane.showMessageDialog(null,"ERROR Main.addEmployeeToList");
+        }else if (affectedRows == -1){
+            JOptionPane.showMessageDialog(null,"ERROR EmployeeDao.add");
         }
     }//GEN-LAST:event_btnAddActionPerformed
 

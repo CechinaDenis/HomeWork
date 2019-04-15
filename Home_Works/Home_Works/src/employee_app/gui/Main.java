@@ -44,7 +44,7 @@ public class Main extends javax.swing.JFrame {
             return affectedRows;
         } else {
             System.err.println("User didn't ENTER Employee ( * ) Fields!!!");
-            return -1;
+            return -3;
         }
     }
 

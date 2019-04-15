@@ -1,5 +1,7 @@
 package employee_app.gui.employee_manager;
 
+import java.util.Objects;
+
 /**
  * @author Denis Cechina
  */
@@ -146,4 +148,33 @@ public class Employee {
                 + city + "," + street + "," + zipCode + "," + position.getName()
                 + "\n";
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 89 * hash + Objects.hashCode(this.name);
+        hash = 89 * hash + Objects.hashCode(this.surname);
+        hash = 89 * hash + Objects.hashCode(this.birthDate);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Employee other = (Employee) obj;
+        if (!(this.name.equalsIgnoreCase(other.name) && this.surname.equalsIgnoreCase(other.surname) && this.birthDate.equalsIgnoreCase(other.birthDate))) {
+            return false;
+        }
+        return true;
+    }
+    
+    
 }
