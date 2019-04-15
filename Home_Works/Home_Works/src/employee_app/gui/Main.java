@@ -49,7 +49,8 @@ public class Main extends javax.swing.JFrame {
     }
 
     private static int addEmployeeToList(Employee emp) {
-        int affectedRows ;
+
+        int affectedRows;
         try {
             affectedRows = EmployeeService.add(emp);
             if (affectedRows == 1) {
@@ -69,23 +70,37 @@ public class Main extends javax.swing.JFrame {
         return affectedRows;
     }
 
-    public static void editEmployee(int idEmployee, String newName,
+    public static int editEmployee(int idEmployee, String newName,
             String newSurname, String newBirthDate, String newCountry,
             String newCity, String newStreet, String newZipCode,
             Position newPosition, int rowRef)
             throws SQLException {
-        DefaultTableModel employeeListModel = (DefaultTableModel) Main.tblMain
-                .getModel();
-        employeeListModel.setValueAt(newName, rowRef - 1, 1);
-        employeeListModel.setValueAt(newSurname, rowRef - 1, 2);
-        employeeListModel.setValueAt(newBirthDate, rowRef - 1, 3);
-        employeeListModel.setValueAt(newCountry, rowRef - 1, 4);
-        employeeListModel.setValueAt(newCity, rowRef - 1, 5);
-        employeeListModel.setValueAt(newStreet, rowRef - 1, 6);
-        employeeListModel.setValueAt(newZipCode, rowRef - 1, 7);
-        employeeListModel.setValueAt(newPosition, rowRef - 1, 8);
-        EmployeeService.edit(idEmployee, newName, newSurname, newBirthDate,
-                newCountry, newCity, newStreet, newZipCode, newPosition, rowRef);
+
+        Employee emp = new Employee(newName, newSurname, newBirthDate,
+                newCountry, newCity, newStreet, newZipCode, newPosition);
+        emp.setId(idEmployee);
+        emp.setRefRow(rowRef);
+        if (emp.isValid()) {
+            int affectedRows = EmployeeService.edit(emp);
+            if (affectedRows == 1) {
+                DefaultTableModel employeeListModel = (DefaultTableModel) Main.tblMain.getModel();
+                employeeListModel.setValueAt(newName, rowRef - 1, 1);
+                employeeListModel.setValueAt(newSurname, rowRef - 1, 2);
+                employeeListModel.setValueAt(newBirthDate, rowRef - 1, 3);
+                employeeListModel.setValueAt(newCountry, rowRef - 1, 4);
+                employeeListModel.setValueAt(newCity, rowRef - 1, 5);
+                employeeListModel.setValueAt(newStreet, rowRef - 1, 6);
+                employeeListModel.setValueAt(newZipCode, rowRef - 1, 7);
+                employeeListModel.setValueAt(newPosition, rowRef - 1, 8);
+                return affectedRows;
+            }else{
+                return affectedRows;
+            }
+        } else {
+            System.err.println("User didn't ENTER Employee ( * ) Fields!!!");
+            return -3;
+        }
+
     }
 
     private void editEmployeeTblRef(int rowRef) {
@@ -107,14 +122,14 @@ public class Main extends javax.swing.JFrame {
         }
     }
 
-    public static void serialization(String filePath) 
-            throws SQLException, IOException, ParserConfigurationException, 
+    public static void serialization(String filePath)
+            throws SQLException, IOException, ParserConfigurationException,
             TransformerException {
 
         EmployeeService.serialization(filePath);
     }
-    
-    public static String fileSave(){
+
+    public static String fileSave() {
         return EmployeeService.fileSave();
     }
 
@@ -307,15 +322,6 @@ public class Main extends javax.swing.JFrame {
             editWindow.setVisible(true);
         }
 
-//        int selectedRow = Main.tblMain.getSelectedRow();
-//        DefaultTableModel employeeListModel = (DefaultTableModel) Main.tblMain.getModel();
-//        if (selectedRow != -1) {
-//            Object value = employeeListModel.getValueAt(selectedRow, ID);
-//            Integer employeeId = Integer.parseInt(value.toString());
-//            Employee foundEmployee = EmployeeService.getById(employeeId);
-//            Edit edit = new Edit(foundEmployee);
-//            edit.setVisible(true);
-//        }
     }//GEN-LAST:event_btnEditeActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed

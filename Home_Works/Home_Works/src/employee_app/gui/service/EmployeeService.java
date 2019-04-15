@@ -31,15 +31,9 @@ public class EmployeeService {
         return empDao.getAll();
     }
 
-    public static int edit(int id, String newName, String newSurname,
-            String newBirthDate, String newCountry, String newCity,
-            String newStreet, String newZipCode, Position newPosition, int refRow)
+    public static int edit(Employee emp)
             throws SQLException {
 
-        Employee emp = new Employee(newName, newSurname, newBirthDate,
-                newCountry, newCity, newStreet, newZipCode, newPosition);
-        emp.setId(id);
-        emp.setRefRow(refRow);
         return empDao.edit(emp);
     }
 

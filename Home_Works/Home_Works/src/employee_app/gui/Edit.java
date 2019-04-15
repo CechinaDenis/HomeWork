@@ -252,17 +252,26 @@ public class Edit extends javax.swing.JFrame {
         String position = cmbBoxPossition.getSelectedItem().toString();
         Position pos = Position.getByPositionName(position);
         try {
-            Main.editEmployee(this.emp.getId(), txtFldName.getText(),
+            int affectedRows = Main.editEmployee(this.emp.getId(), txtFldName.getText(),
                     txtFldSurname.getText(), formTxtFldBirthdate.getText(),
                     txtFldCountry.getText(), txtFldCity.getText(),
                     txtFldStreet.getText(), txtFldZipCode.getText(), pos,
                     this.emp.getRefRow());
-
-            this.setVisible(false);
+            if (affectedRows == 1) {
+                this.setVisible(false);
+                JOptionPane.showMessageDialog(null, "Employee Successfully Edited");
+            } else if (affectedRows == -3) {
+                JOptionPane.showMessageDialog(null, "Please ENTER Employee ( * ) Fields!!!");
+            } else if (affectedRows == 0) {
+                JOptionPane.showMessageDialog(null, "Employee already exists in the Database");
+            } else if (affectedRows == -2) {
+                JOptionPane.showMessageDialog(null, "ERROR Main.addEmployeeToList");
+            } else if (affectedRows == -1) {
+                JOptionPane.showMessageDialog(null, "ERROR EmployeeDao.add");
+            }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "SQL Exception");
         }
-
     }//GEN-LAST:event_btnSaveActionPerformed
 
     public static void main(String args[]) {

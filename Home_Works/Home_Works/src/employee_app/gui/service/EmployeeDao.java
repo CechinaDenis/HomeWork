@@ -102,15 +102,15 @@ public class EmployeeDao {
         return null;
     }
 
-    public int duplicationCheck(Employee emp) 
+    public int duplicationCheck(Employee emp)
             throws SQLException {
 
         int count = 0;
         ArrayList empList = getAll();
-        
-        Iterator <Employee> it = empList.iterator();
-        while(it.hasNext()){
-            if(emp.equals(it.next())){
+
+        Iterator<Employee> it = empList.iterator();
+        while (it.hasNext()) {
+            if (emp.equals(it.next())) {
                 count++;
             }
         }
@@ -120,12 +120,11 @@ public class EmployeeDao {
     public int add(Employee emp)
             throws SQLException {
 
-        String sql = "INSERT INTO app.employee(name, surname, birth_date, "
-                + "country, city, street, zip_code, position) VALUES (?, ?, ?, ?,"
-                + " ?, ?, ?, ?)";
         int checkResult = duplicationCheck(emp);
         if (checkResult == 0) {
-
+            String sql = "INSERT INTO app.employee(name, surname, birth_date, "
+                    + "country, city, street, zip_code, position) VALUES (?, ?, ?, ?,"
+                    + " ?, ?, ?, ?)";
             try (Connection conn = connection();
                     PreparedStatement dbStatement = conn.prepareStatement(sql)) {
 
@@ -183,29 +182,36 @@ public class EmployeeDao {
     public int edit(Employee emp)
             throws SQLException {
 
-        String sql = "UPDATE app.employee SET name=?, surname=?, birth_date=?, "
-                + "country=?, city=?, street=?, zip_code=?,position=? WHERE id=?";
-        try (Connection conn = connection();
-                PreparedStatement dbStatement = conn.prepareStatement(sql)) {
+        int checkResult = duplicationCheck(emp);
+        if (checkResult == 0) {
+            String sql = "UPDATE app.employee SET name=?, surname=?, birth_date=?, "
+                    + "country=?, city=?, street=?, zip_code=?,position=? WHERE id=?";
+            try (Connection conn = connection();
+                    PreparedStatement dbStatement = conn.prepareStatement(sql)) {
 
-            dbStatement.setString(1, emp.getName());
-            dbStatement.setString(2, emp.getSurname());
-            dbStatement.setDate(3, Date.valueOf(emp.getBirthDate()));
-            dbStatement.setString(4, emp.getCountry());
-            dbStatement.setString(5, emp.getCity());
-            dbStatement.setString(6, emp.getStreet());
-            dbStatement.setString(7, emp.getZipCode());
-            dbStatement.setString(8, emp.getPosition().getName());
-            dbStatement.setInt(9, emp.getId());
+                dbStatement.setString(1, emp.getName());
+                dbStatement.setString(2, emp.getSurname());
+                dbStatement.setDate(3, Date.valueOf(emp.getBirthDate()));
+                dbStatement.setString(4, emp.getCountry());
+                dbStatement.setString(5, emp.getCity());
+                dbStatement.setString(6, emp.getStreet());
+                dbStatement.setString(7, emp.getZipCode());
+                dbStatement.setString(8, emp.getPosition().getName());
+                dbStatement.setInt(9, emp.getId());
 
-            int affectedRows = dbStatement.executeUpdate();
-            System.out.printf("Executed insert statement. Affected %d rows",
-                    affectedRows);
+                int affectedRows = dbStatement.executeUpdate();
+                System.out.printf("Executed insert statement. Affected %d rows",
+                        affectedRows);
 
-            return affectedRows;
-        } catch (SQLException ex) {
-            System.err.println("Caught an error trying to insert the employees");
-            throw ex;
+                return affectedRows;
+            } catch (SQLException ex) {
+                System.err.println("Caught an error trying to insert the employees");
+                throw ex;
+            }
+        } else if (checkResult >= 1) {
+            return 0;
+        } else {
+            return -1;
         }
     }
 
