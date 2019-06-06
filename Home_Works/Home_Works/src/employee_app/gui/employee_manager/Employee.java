@@ -170,11 +170,12 @@ public class Employee {
             return false;
         }
         final Employee other = (Employee) obj;
-        if (!(this.name.equalsIgnoreCase(other.name) && this.surname.equalsIgnoreCase(other.surname) && this.birthDate.equalsIgnoreCase(other.birthDate))) {
+        if (!(this.name.equalsIgnoreCase(other.name)
+                && this.surname.equalsIgnoreCase(other.surname)
+                && this.birthDate.equalsIgnoreCase(other.birthDate))) {
             return false;
         }
         return true;
     }
-    
-    
+
 }

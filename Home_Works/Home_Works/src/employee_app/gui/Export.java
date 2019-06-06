@@ -32,7 +32,6 @@ public class Export extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btnExpSql = new javax.swing.JButton();
         btnExpCsv = new javax.swing.JButton();
         btnExpXml = new javax.swing.JButton();
         btnExpJson = new javax.swing.JButton();
@@ -43,8 +42,6 @@ public class Export extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Export");
         setResizable(false);
-
-        btnExpSql.setText("Export .SQL");
 
         btnExpCsv.setText("Export .CSV");
         btnExpCsv.addActionListener(new java.awt.event.ActionListener() {
@@ -75,15 +72,14 @@ public class Export extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
                         .addComponent(btnExpXml, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnExpJson, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnExpSql, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addGap(80, 80, 80)
                         .addComponent(btnExpCsv, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -91,9 +87,7 @@ public class Export extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnExpCsv, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnExpSql, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(btnExpCsv, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnExpXml, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -109,7 +103,7 @@ public class Export extends javax.swing.JFrame {
 
         try {
             serialization(".csv");
-        } catch (ParserConfigurationException | TransformerException
+        } catch (NullPointerException | ParserConfigurationException | TransformerException
                 | SQLException | IOException ex) {
             System.err.println("ParserConfigurationException "
                     + "| TransformerException |SQLException | IOException ex");
@@ -139,7 +133,6 @@ public class Export extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnExpCsv;
     private javax.swing.JButton btnExpJson;
-    private javax.swing.JButton btnExpSql;
     private javax.swing.JButton btnExpXml;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;

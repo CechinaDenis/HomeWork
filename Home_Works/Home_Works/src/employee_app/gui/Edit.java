@@ -2,7 +2,10 @@ package employee_app.gui;
 
 import employee_app.gui.employee_manager.Employee;
 import employee_app.gui.employee_manager.Position;
+import employee_app.gui.service.EmployeeBirthDate;
+import employee_app.gui.service.Month;
 import java.sql.SQLException;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
 /**
@@ -14,9 +17,23 @@ public class Edit extends javax.swing.JFrame {
 
     public Edit(Employee emp) {
         initComponents();
+        cmbBoxYear.setModel(new DefaultComboBoxModel<>(EmployeeBirthDate
+                .getYears()));
+
+        String year = emp.getBirthDate().substring(0, 4);
+        int month = Integer.parseInt(emp.getBirthDate().substring(5, 7)) - 1;
+        String[] daysInMonth = EmployeeBirthDate.getDays(Integer.parseInt(year),
+                String.valueOf(month));
+        String day = emp.getBirthDate().substring(8);
+
         txtFldName.setText(emp.getName());
         txtFldSurname.setText(emp.getSurname());
-        formTxtFldBirthdate.setText(emp.getBirthDate());
+
+        cmbBoxYear.setSelectedItem(year);
+        cmbBoxMonth.setSelectedIndex(month);
+        cmbBoxDay.setModel(new DefaultComboBoxModel<>(daysInMonth));
+        cmbBoxDay.setSelectedItem(day);
+
         txtFldCountry.setText(emp.getCountry());
         txtFldCity.setText(emp.getCity());
         txtFldStreet.setText(emp.getStreet());
@@ -32,7 +49,6 @@ public class Edit extends javax.swing.JFrame {
         txtFldSurname = new java.awt.TextField();
         lblZipCode = new javax.swing.JLabel();
         txtFldZipCode = new java.awt.TextField();
-        formTxtFldBirthdate = new javax.swing.JFormattedTextField();
         lblPossition = new javax.swing.JLabel();
         lblName = new javax.swing.JLabel();
         lblBirthdate = new javax.swing.JLabel();
@@ -46,6 +62,11 @@ public class Edit extends javax.swing.JFrame {
         txtFldStreet = new java.awt.TextField();
         btnSave = new javax.swing.JButton();
         cmbBoxPossition = new javax.swing.JComboBox<>();
+        cmbBoxMonth = new javax.swing.JComboBox<>();
+        lblDateSeparator2 = new javax.swing.JLabel();
+        cmbBoxDay = new javax.swing.JComboBox<>();
+        cmbBoxYear = new javax.swing.JComboBox<>();
+        lblDateSeparator1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Edit");
@@ -68,21 +89,17 @@ public class Edit extends javax.swing.JFrame {
             }
         });
 
-        formTxtFldBirthdate.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("yyyy-MM-dd"))));
-        formTxtFldBirthdate.setToolTipText("YYYY-MM-DD");
-        formTxtFldBirthdate.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-
         lblPossition.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lblPossition.setText("Possition:");
 
         lblName.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        lblName.setText("Name:");
+        lblName.setText("Name:*");
 
         lblBirthdate.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        lblBirthdate.setText("Birth Date:");
+        lblBirthdate.setText("Birth Date:*");
 
         lblSurname.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        lblSurname.setText("Surname:");
+        lblSurname.setText("Surname:*");
 
         lblCounrty.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lblCounrty.setText("Country:");
@@ -131,6 +148,27 @@ public class Edit extends javax.swing.JFrame {
 
         cmbBoxPossition.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Book Keeper", "HR Manager", "Manager", "Programmer", "Salesman", "Technician" }));
 
+        cmbBoxMonth.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Jan ( 01 )", "Feb ( 02 )", "Mar ( 03 )", "Apr ( 04 )", "May ( 05 )", "Jun ( 06 )", "Jul ( 07 )", "Aug ( 08 )", "Sep ( 09 )", "Oct ( 10 )", "Nov ( 11 )", "Dec ( 12 )" }));
+        cmbBoxMonth.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbBoxMonthActionPerformed(evt);
+            }
+        });
+
+        lblDateSeparator2.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        lblDateSeparator2.setText("-");
+
+        cmbBoxDay.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31" }));
+
+        cmbBoxYear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbBoxYearActionPerformed(evt);
+            }
+        });
+
+        lblDateSeparator1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        lblDateSeparator1.setText("-");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -163,7 +201,15 @@ public class Edit extends javax.swing.JFrame {
                                 .addGroup(layout.createSequentialGroup()
                                     .addComponent(lblBirthdate)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(formTxtFldBirthdate, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(cmbBoxYear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(lblDateSeparator1)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(cmbBoxMonth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(lblDateSeparator2)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(cmbBoxDay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lblPossition)
@@ -191,9 +237,14 @@ public class Edit extends javax.swing.JFrame {
                     .addComponent(txtFldSurname, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
                     .addComponent(lblSurname, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(lblBirthdate, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
-                    .addComponent(formTxtFldBirthdate, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblBirthdate, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(lblDateSeparator1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cmbBoxYear, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblDateSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmbBoxDay, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmbBoxMonth, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(txtFldCountry, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -251,28 +302,58 @@ public class Edit extends javax.swing.JFrame {
 
         String position = cmbBoxPossition.getSelectedItem().toString();
         Position pos = Position.getByPositionName(position);
+        String month = cmbBoxMonth.getSelectedItem().toString();
         try {
-            int affectedRows = Main.editEmployee(this.emp.getId(), txtFldName.getText(),
-                    txtFldSurname.getText(), formTxtFldBirthdate.getText(),
+            int affectedRows = Main.editEmployee(this.emp.getId(), txtFldName
+                    .getText(), txtFldSurname.getText(),
+                    (cmbBoxYear.getSelectedItem().toString().concat("-")
+                            .concat(Month.getByMonthValue(month).getValue()
+                                    .substring(6, 8)).concat("-")
+                            .concat(cmbBoxDay.getSelectedItem().toString())),
                     txtFldCountry.getText(), txtFldCity.getText(),
                     txtFldStreet.getText(), txtFldZipCode.getText(), pos,
                     this.emp.getRefRow());
-            if (affectedRows == 1) {
-                this.setVisible(false);
-                JOptionPane.showMessageDialog(null, "Employee Successfully Edited");
-            } else if (affectedRows == -3) {
-                JOptionPane.showMessageDialog(null, "Please ENTER Employee ( * ) Fields!!!");
-            } else if (affectedRows == 0) {
-                JOptionPane.showMessageDialog(null, "Employee already exists in the Database");
-            } else if (affectedRows == -2) {
-                JOptionPane.showMessageDialog(null, "ERROR Main.addEmployeeToList");
-            } else if (affectedRows == -1) {
-                JOptionPane.showMessageDialog(null, "ERROR EmployeeDao.add");
+            switch (affectedRows) {
+                case 1:
+                    this.setVisible(false);
+                    JOptionPane.showMessageDialog(null, "Employee Successfully "
+                            + "Edited");
+                    break;
+                case 0:
+                    JOptionPane.showMessageDialog(null, "Employee already exists"
+                            + " in the Database");
+                    break;
+                case -1:
+                    JOptionPane.showMessageDialog(null, "ERROR EmployeeDao.add");
+                    break;
+                case -2:
+                    JOptionPane.showMessageDialog(null, "ERROR Main.addEmployeeToList");
+                    break;
+                case -3:
+                    JOptionPane.showMessageDialog(null, "Please ENTER Employee "
+                            + "( * ) Fields!!!");
+                    break;
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "SQL Exception");
         }
     }//GEN-LAST:event_btnSaveActionPerformed
+
+    private void cmbBoxMonthActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbBoxMonthActionPerformed
+
+        int year = Integer.valueOf(this.cmbBoxYear.getSelectedItem().toString());
+        String month = this.cmbBoxMonth.getSelectedItem().toString().substring(0, 3);
+        String[] daysInMonth = EmployeeBirthDate.getDays(year, month);
+        this.cmbBoxDay.setModel(new DefaultComboBoxModel<>(daysInMonth));
+    }//GEN-LAST:event_cmbBoxMonthActionPerformed
+
+    private void cmbBoxYearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbBoxYearActionPerformed
+
+        int year = Integer.valueOf(this.cmbBoxYear.getSelectedItem().toString());
+        String month = this.cmbBoxMonth.getSelectedItem().toString().substring(0, 3);
+        String[] daysInMonth = EmployeeBirthDate.getDays(year, month);
+        this.cmbBoxDay.setModel(new DefaultComboBoxModel<>(daysInMonth));
+    }//GEN-LAST:event_cmbBoxYearActionPerformed
 
     public static void main(String args[]) {
 
@@ -283,11 +364,15 @@ public class Edit extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSave;
+    private javax.swing.JComboBox<String> cmbBoxDay;
+    private javax.swing.JComboBox<String> cmbBoxMonth;
     private javax.swing.JComboBox<String> cmbBoxPossition;
-    private javax.swing.JFormattedTextField formTxtFldBirthdate;
+    private javax.swing.JComboBox<String> cmbBoxYear;
     private javax.swing.JLabel lblBirthdate;
     private javax.swing.JLabel lblCity;
     private javax.swing.JLabel lblCounrty;
+    private javax.swing.JLabel lblDateSeparator1;
+    private javax.swing.JLabel lblDateSeparator2;
     private javax.swing.JLabel lblName;
     private javax.swing.JLabel lblPossition;
     private javax.swing.JLabel lblStreet;

@@ -235,33 +235,4 @@ public class EmployeeDao {
             throw ex;
         }
     }
-
-//    public static void serializeToPstgrSQL()
-//            throws ClassNotFoundException, SQLException {
-//
-//        PreparedStatement stmt = getConnection()
-//                .prepareCall("select name, surname, birth_date, country, city, "
-//                        + "street, zip_code, position  from employee;");
-//        ResultSet rs = stmt.executeQuery();
-//        while (rs.next()) {
-//
-//            Object emp = rs.getObject("name");
-//            System.out.println(emp);
-//        }
-//        for(int i = 2; rs.next(); i++){
-//            System.out.println(rs.getArray(i));
-//        }
-//        while(rs.next()){
-//            System.out.println(rs.getArray());
-//        }
-//    }
-//
-//    public static void deserializeFromPstgrSQL()
-//            throws ClassNotFoundException, SQLException {
-//
-//        PreparedStatement stmt = getConnection()
-//                .prepareCall("select * from employee;");
-//        ResultSet rs = stmt.executeQuery();
-//
-//    }
 }

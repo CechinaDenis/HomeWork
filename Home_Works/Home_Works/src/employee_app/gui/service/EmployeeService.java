@@ -1,15 +1,16 @@
 package employee_app.gui.service;
 
 import employee_app.gui.employee_manager.Employee;
-import employee_app.gui.employee_manager.Position;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
+import org.xml.sax.SAXException;
 
 /**
  * @author Denis Cechina
@@ -63,10 +64,42 @@ public class EmployeeService {
         }
     }
 
+    public static void deserialization(String filePath) throws IOException,
+            ParserConfigurationException, SAXException {
+        if (filePath.toLowerCase().endsWith(".csv")) {
+            EmployeeIOService.deserializeFromCSVFile(filePath);
+        } else if (filePath.toLowerCase().endsWith(".xml")) {
+            EmployeeIOService.deserializeFromXMLFile(filePath);
+        } else if (filePath.toLowerCase().endsWith(".json")) {
+//            EmployeeIOService.deserializeFromXMLFile(empList, filePath);
+        } else {
+
+        }
+    }
+
     public static String fileSave() {
-        JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+        JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView()
+                .getHomeDirectory());
 
         int returnValue = jfc.showSaveDialog(null);
+
+        if (returnValue == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = jfc.getSelectedFile();
+            return selectedFile.getAbsolutePath();
+        }
+        return null;
+    }
+
+    public static String fileOpen(String extension) {
+        JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView()
+                .getHomeDirectory());
+        jfc.setDialogTitle("Select an " + extension + " File");
+        jfc.setAcceptAllFileFilterUsed(false);
+        FileNameExtensionFilter filter = new FileNameExtensionFilter(extension
+                + " files", extension);
+        jfc.addChoosableFileFilter(filter);
+
+        int returnValue = jfc.showOpenDialog(null);
 
         if (returnValue == JFileChooser.APPROVE_OPTION) {
             File selectedFile = jfc.getSelectedFile();

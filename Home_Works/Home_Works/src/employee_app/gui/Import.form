@@ -43,16 +43,15 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="btnImpXml" min="-2" pref="117" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="btnImpJson" min="-2" pref="117" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="btnImpSql" min="-2" pref="117" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="78" max="-2" attributes="0"/>
                       <Component id="btnImpCsv" min="-2" pref="117" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -64,10 +63,7 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="btnImpSql" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
-                  <Component id="btnImpCsv" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
-              </Group>
+              <Component id="btnImpCsv" min="-2" pref="40" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btnImpXml" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
@@ -99,14 +95,6 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Import .JSON"/>
       </Properties>
-    </Component>
-    <Component class="javax.swing.JButton" name="btnImpSql">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Import .SQL"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnImpSqlActionPerformed"/>
-      </Events>
     </Component>
   </SubComponents>
 </Form>

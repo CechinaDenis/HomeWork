@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
+import org.xml.sax.SAXException;
 
 /**
  * @author Denis Cechina
@@ -30,7 +31,7 @@ public class Main extends javax.swing.JFrame {
                 employeeListModel.addRow(new Object[]{employeeId, emp.getName(),
                     emp.getSurname(), emp.getBirthDate(), emp.getCountry(),
                     emp.getCity(), emp.getStreet(), emp.getZipCode(),
-                    emp.getPosition().toString()});
+                    emp.getPosition().getName()});
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "SQL Connection Faild,\nPlease "
@@ -51,6 +52,7 @@ public class Main extends javax.swing.JFrame {
     private static int addEmployeeToList(Employee emp) {
 
         int affectedRows;
+
         try {
             affectedRows = EmployeeService.add(emp);
             if (affectedRows == 1) {
@@ -93,7 +95,7 @@ public class Main extends javax.swing.JFrame {
                 employeeListModel.setValueAt(newZipCode, rowRef - 1, 7);
                 employeeListModel.setValueAt(newPosition, rowRef - 1, 8);
                 return affectedRows;
-            }else{
+            } else {
                 return affectedRows;
             }
         } else {
@@ -129,8 +131,17 @@ public class Main extends javax.swing.JFrame {
         EmployeeService.serialization(filePath);
     }
 
+    public static void deserialization(String filePath) throws IOException,
+            ParserConfigurationException, SAXException {
+        EmployeeService.deserialization(filePath);
+    }
+
     public static String fileSave() {
         return EmployeeService.fileSave();
+    }
+
+    public static String fileOpen(String extension) {
+        return EmployeeService.fileOpen(extension);
     }
 
     public Main() {
@@ -138,37 +149,6 @@ public class Main extends javax.swing.JFrame {
         this.loadEmployees();
     }
 
-//    private final int ID = 0;
-//    private final int COLUMN = 0;
-//    private static void addEmployeeToList(Employee emp) {
-//        DefaultTableModel employeeListModel = (DefaultTableModel) Main.tblMain.getModel();
-//        int employeeId = employeeListModel.getRowCount() + 1;
-//        employeeListModel.addRow(new Object[]{employeeId, emp.getName(),
-//            emp.getSurname(), emp.getBirthDate(), emp.getCountry(),
-//            emp.getCity(), emp.getStreet(), emp.getZipCode(),
-//            emp.getPosition().getName()});
-//        emp.setId(employeeId);
-//    }
-//
-//    public static void editEmployee(Integer empId, String newName,
-//            String newSurname, String newBirthDate, String newCountry,
-//            String newCity, String newStreet, String newZipCode,
-//            Position newPosition) {
-//
-//        DefaultTableModel employeeListModel = (DefaultTableModel) Main.tblMain.getModel();
-//        employeeListModel.setValueAt(newName, empId - 1, 1);
-//        employeeListModel.setValueAt(newSurname, empId - 1, 2);
-//        employeeListModel.setValueAt(newBirthDate, empId - 1, 3);
-//        employeeListModel.setValueAt(newCountry, empId - 1, 4);
-//        employeeListModel.setValueAt(newCity, empId - 1, 5);
-//        employeeListModel.setValueAt(newStreet, empId - 1, 6);
-//        employeeListModel.setValueAt(newZipCode, empId - 1, 7);
-//        employeeListModel.setValueAt(newPosition.getName(), empId - 1, 8);
-//        EmployeeService.editEmployee(empId, newName, newSurname,
-//                newBirthDate, newCountry, newCity, newStreet, newZipCode,
-//                newPosition);
-//    }
-//
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -198,7 +178,15 @@ public class Main extends javax.swing.JFrame {
             new String [] {
                 "ID", "Name", "Surname", "Birth Date", "Country", "City", "Street", "ZIP Code", "Position"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(tblMain);
         if (tblMain.getColumnModel().getColumnCount() > 0) {
             tblMain.getColumnModel().getColumn(0).setResizable(false);
@@ -361,7 +349,6 @@ public class Main extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "Something went wrong!!!\n"
                             + "Please try one more time!!!");
                 }
-//            EmployeeService.deleteEmployee(employeeId);
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(null, "Something went wrong!!!\n"
                         + "Please try one more time!!!");

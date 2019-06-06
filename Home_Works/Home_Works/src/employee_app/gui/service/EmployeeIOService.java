@@ -56,23 +56,23 @@ public class EmployeeIOService {
         fileOutStream.close();
         printWriter.close();
     }
-//
-//    public static void deserializeFromCSVFile(String filePath)
-//            throws FileNotFoundException, IOException {
-//
-//        FileReader fileReader = new FileReader(new File(filePath.concat(CSV_EXTENSION)));
-//        BufferedReader bufferedReader = new BufferedReader(fileReader);
-//        String fileLine;
-//        while ((fileLine = bufferedReader.readLine()) != null && !"\n".equals(bufferedReader.readLine())) {
-//            String[] arrOfStr = fileLine.split(",");
-//            Employee emp = new Employee(arrOfStr[0], arrOfStr[1], arrOfStr[2],
-//                    arrOfStr[3], arrOfStr[4], arrOfStr[5], arrOfStr[6]);
-//            EmployeeService.getEmpoyeeList().add(emp);
-//            emp.setPosition(Position.getByPositionName(arrOfStr[7]));
-//            Main.addEmployee(emp);
-//        }
-//    }
-//
+
+    public static void deserializeFromCSVFile(String filePath)
+            throws FileNotFoundException, IOException {
+
+        FileReader fileReader = new FileReader(new File(filePath));
+        BufferedReader bufferedReader = new BufferedReader(fileReader);
+        String fileLine;
+        while ((fileLine = bufferedReader.readLine()) != null && !"\n".equals(bufferedReader.readLine())) {
+            String[] arrOfStr = fileLine.split(",");
+            Employee emp = new Employee(arrOfStr[0], arrOfStr[1], arrOfStr[2],
+                    arrOfStr[3], arrOfStr[4], arrOfStr[5], arrOfStr[6]);
+            emp.setPosition(Position.getByPositionName(arrOfStr[7]));
+            Main.addEmployee(emp);
+        }
+    }
+
+
     public static void serializeToXMLFile(List<Employee> empList, String filePath)
             throws ParserConfigurationException, TransformerConfigurationException, TransformerException {
 
@@ -120,43 +120,42 @@ public class EmployeeIOService {
         StreamResult destination = new StreamResult(new File(filePath));
         transformer.transform(source, destination);
     }
-//
-//    public static void deserializeFromXMLFile(String filePath)
-//            throws ParserConfigurationException, SAXException, IOException {
-//
-//        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-//        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-//        Document xmlDoc = dBuilder.parse(filePath.concat(XML_EXTENSION));
-//        xmlDoc.getDocumentElement().normalize();
-//
-//        NodeList newList = xmlDoc.getElementsByTagName(EMPLOYEE_NODE);
-//
-//        for (int i = 0; i < newList.getLength(); i++) {
-//            Node newNode = newList.item(i);
-//            if (newNode.getNodeType() == Node.ELEMENT_NODE) {
-//                Element eElement = (Element) newNode;
-//
-//                Employee emp = new Employee(
-//                        eElement.getElementsByTagName(NAME_NODE).item(0)
-//                                .getTextContent(),
-//                        eElement.getElementsByTagName(SURNAME_NODE).item(0)
-//                                .getTextContent(),
-//                        eElement.getElementsByTagName(BITHDATE_NODE).item(0)
-//                                .getTextContent(),
-//                        eElement.getElementsByTagName(COUNTRY_NODE).item(0)
-//                                .getTextContent(),
-//                        eElement.getElementsByTagName(CITY_NODE).item(0)
-//                                .getTextContent(),
-//                        eElement.getElementsByTagName(STREET_NODE).item(0)
-//                                .getTextContent(),
-//                        eElement.getElementsByTagName(ZIPCODE_NODE).item(0)
-//                                .getTextContent());
-//                EmployeeService.getEmpoyeeList().add(emp);
-//                emp.setPosition(Position.getByPositionName(
-//                        eElement.getElementsByTagName(POSITION_NODE).item(0)
-//                                .getTextContent()));
-//                Main.addEmployee(emp);
-//            }
-//        }
-//    }
+
+    public static void deserializeFromXMLFile(String filePath)
+            throws ParserConfigurationException, SAXException, IOException {
+
+        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+        Document xmlDoc = dBuilder.parse(filePath);
+        xmlDoc.getDocumentElement().normalize();
+
+        NodeList newList = xmlDoc.getElementsByTagName(EMPLOYEE_NODE);
+
+        for (int i = 0; i < newList.getLength(); i++) {
+            Node newNode = newList.item(i);
+            if (newNode.getNodeType() == Node.ELEMENT_NODE) {
+                Element eElement = (Element) newNode;
+
+                Employee emp = new Employee(
+                        eElement.getElementsByTagName(NAME_NODE).item(0)
+                                .getTextContent(),
+                        eElement.getElementsByTagName(SURNAME_NODE).item(0)
+                                .getTextContent(),
+                        eElement.getElementsByTagName(BITHDATE_NODE).item(0)
+                                .getTextContent(),
+                        eElement.getElementsByTagName(COUNTRY_NODE).item(0)
+                                .getTextContent(),
+                        eElement.getElementsByTagName(CITY_NODE).item(0)
+                                .getTextContent(),
+                        eElement.getElementsByTagName(STREET_NODE).item(0)
+                                .getTextContent(),
+                        eElement.getElementsByTagName(ZIPCODE_NODE).item(0)
+                                .getTextContent());
+                emp.setPosition(Position.getByPositionName(
+                        eElement.getElementsByTagName(POSITION_NODE).item(0)
+                                .getTextContent()));
+                Main.addEmployee(emp);
+            }
+        }
+    }
 }
