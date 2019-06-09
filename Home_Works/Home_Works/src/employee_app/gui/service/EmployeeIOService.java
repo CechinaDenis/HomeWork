@@ -1,5 +1,8 @@
 package employee_app.gui.service;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import employee_app.gui.Main;
 import employee_app.gui.employee_manager.Employee;
 import employee_app.gui.employee_manager.Position;
@@ -8,8 +11,12 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.Writer;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -63,7 +70,8 @@ public class EmployeeIOService {
         FileReader fileReader = new FileReader(new File(filePath));
         BufferedReader bufferedReader = new BufferedReader(fileReader);
         String fileLine;
-        while ((fileLine = bufferedReader.readLine()) != null && !"\n".equals(bufferedReader.readLine())) {
+        while ((fileLine = bufferedReader.readLine()) != null && !"\n"
+                .equals(bufferedReader.readLine())) {
             String[] arrOfStr = fileLine.split(",");
             Employee emp = new Employee(arrOfStr[0], arrOfStr[1], arrOfStr[2],
                     arrOfStr[3], arrOfStr[4], arrOfStr[5], arrOfStr[6]);
@@ -72,11 +80,12 @@ public class EmployeeIOService {
         }
     }
 
-
     public static void serializeToXMLFile(List<Employee> empList, String filePath)
-            throws ParserConfigurationException, TransformerConfigurationException, TransformerException {
+            throws ParserConfigurationException, TransformerConfigurationException,
+            TransformerException {
 
-        DocumentBuilderFactory domBuilderFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilderFactory domBuilderFactory = DocumentBuilderFactory
+                .newInstance();
         DocumentBuilder domBuilder = domBuilderFactory.newDocumentBuilder();
         Document doc = domBuilder.newDocument();
         Element root = doc.createElement(EMPLOYEELIST_NODE);
@@ -156,6 +165,30 @@ public class EmployeeIOService {
                                 .getTextContent()));
                 Main.addEmployee(emp);
             }
+        }
+    }
+
+    public static void serializeToJSONFile(List<Employee> empList, String filePath)
+            throws IOException {
+
+        Writer writer = new FileWriter(filePath);
+        Gson gson = new GsonBuilder().create();
+        gson.toJson(empList, writer);
+
+        writer.flush();
+        writer.close();
+    }
+
+    public static void deserializeFromJSONFile(String filePath)
+            throws FileNotFoundException {
+
+        Gson gson = new Gson();
+        BufferedReader br = new BufferedReader(new FileReader(filePath));
+        Type type = new TypeToken<List<Employee>>() {
+        }.getType();
+        ArrayList<Employee> empList = gson.fromJson(br, type);
+        for (Employee emp : empList) {
+            Main.addEmployee(emp);
         }
     }
 }

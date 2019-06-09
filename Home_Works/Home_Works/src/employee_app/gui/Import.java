@@ -18,7 +18,7 @@ public class Import extends javax.swing.JFrame {
 
     private void deserialization(String extension)
             throws SQLException, IOException, ParserConfigurationException,
-            TransformerException, NullPointerException, SAXException{
+            TransformerException, NullPointerException, SAXException {
 
         String filePath = Main.fileOpen(extension);
         if (filePath.endsWith(extension)) {
@@ -58,6 +58,11 @@ public class Import extends javax.swing.JFrame {
         });
 
         btnImpJson.setText("Import .JSON");
+        btnImpJson.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImpJsonActionPerformed(evt);
+            }
+        });
 
         jMenu1.setText("File");
         jMenuBar1.add(jMenu1);
@@ -116,6 +121,7 @@ public class Import extends javax.swing.JFrame {
         } catch (SAXException ex) {
             System.out.println("SAXException");
         }
+        this.setVisible(false);
     }//GEN-LAST:event_btnImpCsvActionPerformed
 
     private void btnImpXmlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImpXmlActionPerformed
@@ -135,7 +141,28 @@ public class Import extends javax.swing.JFrame {
         } catch (SAXException ex) {
             System.out.println("SAXException");
         }
+        this.setVisible(false);
     }//GEN-LAST:event_btnImpXmlActionPerformed
+
+    private void btnImpJsonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImpJsonActionPerformed
+
+        try {
+            deserialization("json");
+        } catch (SQLException ex) {
+            System.out.println("SQLException");
+        } catch (IOException ex) {
+            System.out.println("IOException");
+        } catch (ParserConfigurationException ex) {
+            System.out.println("ParserConfigurationException");
+        } catch (TransformerException ex) {
+            System.out.println("TransformerException");
+        } catch (NullPointerException ex) {
+            System.out.println("NullPointerException");
+        } catch (SAXException ex) {
+            System.out.println("SAXException");
+        }
+        this.setVisible(false);
+    }//GEN-LAST:event_btnImpJsonActionPerformed
 
     public static void main(String args[]) {
 

@@ -58,6 +58,11 @@ public class Export extends javax.swing.JFrame {
         });
 
         btnExpJson.setText("Export .JSON");
+        btnExpJson.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExpJsonActionPerformed(evt);
+            }
+        });
 
         jMenu1.setText("File");
         jMenuBar1.add(jMenu1);
@@ -103,8 +108,8 @@ public class Export extends javax.swing.JFrame {
 
         try {
             serialization(".csv");
-        } catch (NullPointerException | ParserConfigurationException | TransformerException
-                | SQLException | IOException ex) {
+        } catch (NullPointerException | ParserConfigurationException
+                | TransformerException | SQLException | IOException ex) {
             System.err.println("ParserConfigurationException "
                     + "| TransformerException |SQLException | IOException ex");
         }
@@ -122,6 +127,18 @@ public class Export extends javax.swing.JFrame {
         }
         this.setVisible(false);
     }//GEN-LAST:event_btnExpXmlActionPerformed
+
+    private void btnExpJsonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExpJsonActionPerformed
+
+        try {
+            serialization(".json");
+        } catch (ParserConfigurationException | TransformerException
+                | SQLException | IOException ex) {
+            System.err.println("ParserConfigurationException "
+                    + "| TransformerException | SQLException | IOException ex");
+        }
+        this.setVisible(false);
+    }//GEN-LAST:event_btnExpJsonActionPerformed
 
     public static void main(String args[]) {
 
